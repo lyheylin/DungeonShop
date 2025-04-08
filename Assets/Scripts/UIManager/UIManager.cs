@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button dungeonButton;
     [SerializeField] private Button resultsButton;
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Button nextPhaseButton;
 
 
     private void Start() {
@@ -21,5 +22,23 @@ public class UIManager : MonoBehaviour {
         dungeonButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Dungeon));
         resultsButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Results));
         pauseButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Pause));
+        nextPhaseButton.onClick.AddListener(AdvanceToNextPhase);
+    }
+
+    private void AdvanceToNextPhase() {
+        switch (GameManager.Instance.CurrentState) {
+            case GameState.Crafting:
+                DayCycleManager.Instance.EndCraftingPhase();
+                break;
+            case GameState.Shop:
+                DayCycleManager.Instance.EndShopPhase();
+                break;
+            case GameState.Dungeon:
+                DayCycleManager.Instance.EndDungeonPhase();
+                break;
+            case GameState.Results:
+                DayCycleManager.Instance.FinishResultsAndEndDay();
+                break;
+        }
     }
 }

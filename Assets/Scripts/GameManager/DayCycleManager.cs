@@ -1,0 +1,49 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DayCycleManager : MonoBehaviour {
+    public static DayCycleManager Instance { get; private set; }
+
+    public int currentDay { get; private set; } = 1;
+    public event Action<int> OnDayStarted;
+    public event Action<int> OnDayEnded;
+
+    private void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void StartDay() {
+        Debug.Log($"Day {currentDay} started.");
+        OnDayStarted?.Invoke(currentDay);
+
+        GameManager.Instance.ChangeState(GameState.Crafting);
+    }
+
+    public void EndCraftingPhase() {
+        GameManager.Instance.ChangeState(GameState.Shop);
+    }
+
+    public void EndShopPhase() {
+        GameManager.Instance.ChangeState(GameState.Dungeon);
+    }
+
+    public void EndDungeonPhase() {
+        GameManager.Instance.ChangeState(GameState.Results);
+    }
+
+    public void FinishResultsAndEndDay() {
+        Debug.Log($"Day {currentDay} ended.");
+        OnDayEnded?.Invoke(currentDay);
+
+        currentDay++;
+        StartDay();
+    }
+}
