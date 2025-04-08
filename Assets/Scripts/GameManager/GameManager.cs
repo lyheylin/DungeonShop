@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour{
                 // Start shop phase
                 break;
             case GameState.Dungeon:
-                // Trigger dungeon simulation
+                DayCycleManager.Instance.StartDungeonPhase();
                 break;
             case GameState.Results:
                 // Display results and loot

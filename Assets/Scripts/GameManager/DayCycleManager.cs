@@ -35,6 +35,10 @@ public class DayCycleManager : MonoBehaviour {
         GameManager.Instance.ChangeState(GameState.Dungeon);
     }
 
+    public void StartDungeonPhase() {
+        FindObjectOfType<DungeonSimulator>().RunDungeon();
+    }
+
     public void EndDungeonPhase() {
         GameManager.Instance.ChangeState(GameState.Results);
     }
