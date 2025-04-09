@@ -6,20 +6,33 @@ public class Adventurer {
     [SerializeField] private AdventurerDataSO adventurer;
 
 
-    //placeholders
+    //PH
     private int currentHP;
-    public int currentAttack;
-    public int currentDefense;
-    public bool survivedLastRun = true;
+    private int currentAttack;
+    private int currentDefense;
+    private bool survivedLastRun = true;
+
+    private List<LootItem> collectedLoot = new List<LootItem>();
+
+    public string GetName() => adventurer.GetAdventurerName();
+    public int GetCurrentAttack() => currentAttack;
+    public int GetCurrentDefense() => currentDefense;
+    public bool DidSurvive() => survivedLastRun;
+    public List<LootItem> GetCollectedLoot() => collectedLoot;
 
     public Adventurer(AdventurerDataSO adventurer) {
         this.adventurer = adventurer;
-        this.currentHP = adventurer.baseHP;
-        this.currentAttack = adventurer.baseAttack;
-        this.currentDefense = adventurer.baseDefense;
+        currentHP = adventurer.GetBaseHP();
+        currentAttack = adventurer.GetBaseAttack();
+        currentDefense = adventurer.GetBaseDefense();
+    }
+    public void SetSurvivedLastRun(bool survived) {
+        survivedLastRun = survived;
+        if (!survived) collectedLoot.Clear(); // Optional: lose loot on failure //PH
     }
 
-    public string GetName() {
-        return adventurer.name;
+    public void ReceiveLoot(LootItem loot) {
+        if (loot != null)
+            collectedLoot.Add(loot);
     }
 }
