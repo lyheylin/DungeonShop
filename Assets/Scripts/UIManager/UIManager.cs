@@ -13,7 +13,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button resultsButton;
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button nextPhaseButton;
-
+    [SerializeField] private Button saveButton;
+    [SerializeField] private Button loadButton;
+    [SerializeField] private Button inventoryButton;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -23,10 +25,13 @@ public class UIManager : MonoBehaviour {
         resultsButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Results));
         pauseButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Pause));
         nextPhaseButton.onClick.AddListener(AdvanceToNextPhase);
+        saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
+        loadButton.onClick.AddListener(() => SaveManager.Instance.LoadGame());
+        inventoryButton.onClick.AddListener(() => Inventory.Instance.ListItems());
     }
 
     private void AdvanceToNextPhase() {
-        switch (GameManager.Instance.CurrentState) {
+        switch (GameManager.Instance.GetCurrentGameState()) {
             case GameState.Crafting:
                 DayCycleManager.Instance.EndCraftingPhase();
                 break;

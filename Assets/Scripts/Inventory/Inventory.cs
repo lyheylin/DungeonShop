@@ -19,6 +19,8 @@ public class Inventory : MonoBehaviour {
         DontDestroyOnLoad(gameObject); // Optional: Persist across scenes
     }
 
+
+    //Inventory management
     public void AddItem(ItemDataSO itemData, int amount = 1) {
         var slot = items.Find(i => i.GetItemData() == itemData);
 
@@ -56,4 +58,34 @@ public class Inventory : MonoBehaviour {
             Debug.Log($"{item.GetQuantity()} x {item.GetItemData().GetName()}"); 
         }
     }
+
+
+    //Save/Load 
+    public InventorySaveData GetSaveData() {
+        var saveData = new InventorySaveData();
+
+        foreach (var slot in items) {
+            saveData.items.Add(new InventoryItemEntry {
+                itemName = slot.GetItemData().GetName(),
+                quantity = slot.GetQuantity()
+            });
+        }
+
+        return saveData;
+    }
+
+    public void LoadFromSaveData(InventorySaveData data, ItemDatabase itemDatabase) {
+        items.Clear();
+
+        foreach (var entry in data.items) {
+            var itemData = itemDatabase.GetItemByName(entry.itemName);
+            if (itemData != null) {
+                items.Add(new InventorySlot(itemData, entry.quantity));
+            } else {
+                Debug.LogWarning($"Item not found in database while loading inventory: {entry.itemName}");
+            }
+        }
+    }
+
+
 }

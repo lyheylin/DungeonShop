@@ -6,9 +6,11 @@ using UnityEngine;
 public class DayCycleManager : MonoBehaviour {
     public static DayCycleManager Instance { get; private set; }
 
-    public int currentDay { get; private set; } = 1;
+    private int currentDay = 1;
     public event Action<int> OnDayStarted;
     public event Action<int> OnDayEnded;
+
+    public int GetCurrentDay() => currentDay;
 
     private void Awake() {
         if (Instance != null && Instance != this) {

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour{
     public static GameManager Instance { get; private set; }
-    public GameState CurrentState { get; private set; }
+    private GameState CurrentState;
 
+    public GameState GetCurrentGameState() => CurrentState;
     private void Awake() {
 
         //Singleton
