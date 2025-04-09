@@ -52,4 +52,16 @@ public class DayCycleManager : MonoBehaviour {
         currentDay++;
         StartDay();
     }
+
+    public TimeSaveData GetSaveData() {
+        return new TimeSaveData {
+            currentDay = currentDay,
+            currentGameState = GameManager.Instance.GetCurrentGameState()
+        };
+    }
+
+    public void LoadFromSaveData(TimeSaveData data) {
+        currentDay = data.currentDay;
+        GameManager.Instance.ChangeState(data.currentGameState);
+    }
 }

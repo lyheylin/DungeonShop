@@ -7,6 +7,7 @@ public class SaveManager : MonoBehaviour {
     public static SaveManager Instance { get; private set; }
 
     [SerializeField] private ItemDatabase itemDatabase;
+
     private string savePath => Path.Combine(Application.persistentDataPath, "save.json");
 
     private void Awake() {
@@ -22,12 +23,14 @@ public class SaveManager : MonoBehaviour {
     [System.Serializable]
     private class GameSaveData {
         public InventorySaveData inventory;
+        public TimeSaveData time;
         // future: public AdventurerSaveData adventurers; etc.
     }
 
     public void SaveGame() {
         var data = new GameSaveData {
-            inventory = Inventory.Instance.GetSaveData()
+            inventory = Inventory.Instance.GetSaveData(),
+            time = DayCycleManager.Instance.GetSaveData()
         };
 
         string json = JsonUtility.ToJson(data, true);
@@ -45,6 +48,7 @@ public class SaveManager : MonoBehaviour {
         var data = JsonUtility.FromJson<GameSaveData>(json);
 
         Inventory.Instance.LoadFromSaveData(data.inventory, itemDatabase);
+        DayCycleManager.Instance.LoadFromSaveData(data.time);
         Debug.Log("Game loaded.");
     }
 }
