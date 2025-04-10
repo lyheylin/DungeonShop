@@ -34,4 +34,7 @@ public class ItemDatabase : ScriptableObject {
     }
 
     public List<ItemDataSO> GetAllItems() => allItems;
+    public void AddItem(ItemDataSO item) {
+        allItems.Add(item);
+    }
 }

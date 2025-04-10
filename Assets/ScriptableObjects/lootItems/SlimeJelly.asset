@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 780c4aece66166740a2c0a58c3be3259, type: 3}
-  m_Name: SlimeCrystal
+  m_Script: {fileID: 11500000, guid: a0577498f0d370a49b2a135a9646230f, type: 3}
+  m_Name: SlimeJelly
   m_EditorClassIdentifier: 
-  itemName: Slime Crystal
-  description: 
-  itemType: 0
+  lootName: Slime Jelly
+  description: The innards of slimes.
+  rarity: 0
   icon: {fileID: 0}
-  isSellable: 0
-  basePrice: 0

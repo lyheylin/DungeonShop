@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306bfef828727dc41b2a07fa12e48dc0, type: 3}
   m_Name: mHPPotion
   m_EditorClassIdentifier: 
-  recipeName: Minor HP Motion
+  recipeName: Minor Healing Potion
   ingredients:
-  - item: {fileID: 11400000, guid: aa14e2eeedc3d324e9f42bee4126da19, type: 2}
+  - item: {fileID: 11400000, guid: 186c34e64fce9dd4b96624e80d2462fa, type: 2}
     quantity: 2
   - item: {fileID: 11400000, guid: 0a7aee4af91a8c543b181cdfe08deb27, type: 2}
     quantity: 1
-  result: {fileID: 11400000, guid: d2eb7cdb31db5054d907e9159bb190d6, type: 2}
+  result: {fileID: 11400000, guid: cd19d92a523d6dd4682a638d2eb22098, type: 2}
   resultAmount: 3
