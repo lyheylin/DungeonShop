@@ -18,8 +18,15 @@ public class ItemDataSO : ScriptableObject {
     [SerializeField] private ItemType itemType;
     [SerializeField] private Sprite icon;
 
+    [Header("Shop Properties")]
+    [SerializeField] private bool isSellable;
+    [SerializeField] private int basePrice;
+
     public string GetName() => itemName;
     public string GetDescription() => description;
     public ItemType GetItemType() => itemType;
     public Sprite GetIcon() => icon;
+
+    public bool IsSellable() => isSellable;
+    public int GetBasePrice() => basePrice;
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306bfef828727dc41b2a07fa12e48dc0, type: 3}
+  m_Name: mHPPotion
+  m_EditorClassIdentifier: 
+  recipeName: Minor HP Motion
+  ingredients:
+  - item: {fileID: 11400000, guid: aa14e2eeedc3d324e9f42bee4126da19, type: 2}
+    quantity: 2
+  - item: {fileID: 11400000, guid: 0a7aee4af91a8c543b181cdfe08deb27, type: 2}
+    quantity: 1
+  result: {fileID: 11400000, guid: d2eb7cdb31db5054d907e9159bb190d6, type: 2}
+  resultAmount: 3

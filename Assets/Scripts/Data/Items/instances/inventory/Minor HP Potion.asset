@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Minor HP Potion
   description: Heals slightly
-  itemType: 0
+  itemType: 2
   icon: {fileID: 0}
-  baseValue: 10
-  power: 0
-  durability: 0
-  rarity: 0
+  isSellable: 1
+  basePrice: 15
