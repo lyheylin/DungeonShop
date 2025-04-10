@@ -85,6 +85,9 @@ public class LootItemSOGenerator{
         string itemPath = "Assets/ScriptableObjects/inventoryItems/";
         string path = "Assets/ScriptableObjects/recipes/";
 
+        //PH
+        
+
         // Load required items
         ItemDataSO slimeJelly = AssetDatabase.LoadAssetAtPath<ItemDataSO>($"{itemPath}SlimeJelly.asset");
         ItemDataSO grossMeat = AssetDatabase.LoadAssetAtPath<ItemDataSO>($"{itemPath}GrossMeat.asset");
