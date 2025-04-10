@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: Bat Wings
   description: Tough but flexible leather.
   itemType: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4dacdb0ce52718b46b12d59919c8094e, type: 3}
   isSellable: 0
   basePrice: 0

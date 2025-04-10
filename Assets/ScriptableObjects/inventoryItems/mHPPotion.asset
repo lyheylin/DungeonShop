@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: Minor Healing Potion
   description: A bottle of potion that heal wounds slightly.
   itemType: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b044dcf9aad2f584b87823af05cb09e2, type: 3}
   isSellable: 1
   basePrice: 15

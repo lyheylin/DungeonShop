@@ -47,9 +47,9 @@ public class Inventory : MonoBehaviour {
         return true;
     }
 
-    public bool HasItem(ItemDataSO itemData, int amount = 1) {
+    public bool HasItem(ItemDataSO itemData) {
         var slot = items.Find(i => i.GetItemData() == itemData);
-        return slot != null && slot.GetQuantity() >= amount;
+        return slot != null;
     }
 
     public void ListItems() {
@@ -58,7 +58,12 @@ public class Inventory : MonoBehaviour {
             Debug.Log($"{item.GetQuantity()} x {item.GetItemData().GetName()}"); 
         }
     }
-
+    public int GetItemQuantity(ItemDataSO item) {
+        var slot = items.Find(i => i.GetItemData() == item);
+        if(slot != null)
+            return slot.GetQuantity();
+        return 0;
+    }
 
     //Save/Load 
     public InventorySaveData GetSaveData() {

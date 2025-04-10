@@ -15,4 +15,4 @@ MonoBehaviour:
   lootName: Slime Jelly
   description: The innards of slimes.
   rarity: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bc614af484f3fc040b041be8ca1f94ee, type: 3}

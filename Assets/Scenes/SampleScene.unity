@@ -1295,10 +1295,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleLoot:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e82a58a8675365447b9d3dabcc536057, type: 2}
+  - {fileID: 11400000, guid: 72d1596ed948a374798d64862edc432c, type: 2}
+  - {fileID: 11400000, guid: b31fdd31547f68e48b70c373fd77a260, type: 2}
+  - {fileID: 11400000, guid: c95c989c0319f6d41961264cd307e724, type: 2}
   itemDatabase: {fileID: 11400000, guid: 598292309fa47d544a3d5fb07e3363f8, type: 2}
 --- !u!4 &682996240
 Transform:

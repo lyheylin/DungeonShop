@@ -16,6 +16,6 @@ MonoBehaviour:
   description: Clear, chunky jelly that can be used for lotion, possesses medicinal
     properties.
   itemType: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: bc614af484f3fc040b041be8ca1f94ee, type: 3}
   isSellable: 0
   basePrice: 0
