@@ -11,11 +11,11 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button shopButton;
     [SerializeField] private Button dungeonButton;
     [SerializeField] private Button resultsButton;
-    [SerializeField] private Button pauseButton;
     [SerializeField] private Button nextPhaseButton;
     [SerializeField] private Button saveButton;
     [SerializeField] private Button loadButton;
     [SerializeField] private Button inventoryButton;
+    [SerializeField] private GameObject inventoryCanvas;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour {
         shopButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Shop));
         dungeonButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Dungeon));
         resultsButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Results));
-        pauseButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.Pause));
         nextPhaseButton.onClick.AddListener(AdvanceToNextPhase);
         saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
         loadButton.onClick.AddListener(() => SaveManager.Instance.LoadGame());
@@ -34,6 +33,7 @@ public class UIManager : MonoBehaviour {
         switch (GameManager.Instance.GetCurrentGameState()) {
             case GameState.Crafting:
                 DayCycleManager.Instance.EndCraftingPhase();
+                inventoryCanvas.SetActive(false);
                 break;
             case GameState.Shop:
                 DayCycleManager.Instance.EndShopPhase();
@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour {
                 DayCycleManager.Instance.EndDungeonPhase();
                 break;
             case GameState.Results:
+                inventoryCanvas.SetActive(true);
                 DayCycleManager.Instance.FinishResultsAndEndDay();
                 break;
         }
