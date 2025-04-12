@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour{
     public static GameManager Instance { get; private set; }
     private GameState CurrentState;
+
+    public event Action<GameState> OnCraftingStateStarted;
+    public event Action<GameState> OnShopStateStarted;
 
     public GameState GetCurrentGameState() => CurrentState;
     private void Awake() {
@@ -32,10 +36,12 @@ public class GameManager : MonoBehaviour{
                 // Show main menu UI
                 break;
             case GameState.Crafting:
+                OnCraftingStateStarted?.Invoke(CurrentState);
                 // Load crafting UI and scene elements
                 break;
             case GameState.Shop:
                 // Start shop phase
+                OnShopStateStarted?.Invoke(CurrentState);
                 break;
             case GameState.Dungeon:
                 DayCycleManager.Instance.StartDungeonPhase();

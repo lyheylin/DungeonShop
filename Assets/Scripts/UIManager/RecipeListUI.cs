@@ -7,6 +7,7 @@ public class RecipeListUI : MonoBehaviour {
     [SerializeField] private GameObject recipeButtonPrefab;
     [SerializeField] private Transform contentRoot;
     [SerializeField] private InventoryPanelUI inventoryUI;
+    [SerializeField] private ShopDisplayUI shopDisplayUI;
 
     [SerializeField] private List<RecipeDataSO> availableRecipes;
 
@@ -21,6 +22,7 @@ public class RecipeListUI : MonoBehaviour {
                 bool success = CraftingManager.Instance.CraftRecipe(recipe);
                 if (success) {
                     inventoryUI.RefreshInventory();
+                    shopDisplayUI.RefreshShopSlots();
                 }
             });
         }

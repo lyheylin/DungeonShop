@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button saveButton;
     [SerializeField] private Button loadButton;
     [SerializeField] private Button inventoryButton;
-    [SerializeField] private GameObject inventoryCanvas;
+    [SerializeField] private GameObject craftingUICanvas;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -27,13 +27,24 @@ public class UIManager : MonoBehaviour {
         saveButton.onClick.AddListener(() => SaveManager.Instance.SaveGame());
         loadButton.onClick.AddListener(() => SaveManager.Instance.LoadGame());
         inventoryButton.onClick.AddListener(() => Inventory.Instance.ListItems());
+
+        GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
+        GameManager.Instance.OnShopStateStarted += Handle_OnShopStateStarted;
+    }
+
+    
+
+    private void Handle_OnCraftingStateStarted(GameState state) {
+        craftingUICanvas.SetActive(true);
+    }
+    private void Handle_OnShopStateStarted(GameState obj) {
+        craftingUICanvas.SetActive(false);
     }
 
     private void AdvanceToNextPhase() {
         switch (GameManager.Instance.GetCurrentGameState()) {
             case GameState.Crafting:
                 DayCycleManager.Instance.EndCraftingPhase();
-                inventoryCanvas.SetActive(false);
                 break;
             case GameState.Shop:
                 DayCycleManager.Instance.EndShopPhase();
@@ -42,7 +53,6 @@ public class UIManager : MonoBehaviour {
                 DayCycleManager.Instance.EndDungeonPhase();
                 break;
             case GameState.Results:
-                inventoryCanvas.SetActive(true);
                 DayCycleManager.Instance.FinishResultsAndEndDay();
                 break;
         }
