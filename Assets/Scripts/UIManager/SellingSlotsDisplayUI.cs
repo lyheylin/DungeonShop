@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopDisplayUI : MonoBehaviour {
+public class SellingSlotsDisplayUI : MonoBehaviour {
     [SerializeField] private GameObject shopSlotPrefab;
     [SerializeField] private Transform gridRoot;
 
     //PH
     private const int MaxShopSlots = 6; // Expandable later
+    private List<SellingSlot> sellingSlots = new List<SellingSlot>();
 
     public void RefreshShopSlots() {
         foreach (Transform child in gridRoot)
@@ -19,10 +20,20 @@ public class ShopDisplayUI : MonoBehaviour {
             if (slotsFilled >= MaxShopSlots) break;
 
             GameObject slotGO = Instantiate(shopSlotPrefab, gridRoot);
-            ShopSlotUI slot = slotGO.GetComponent<ShopSlotUI>();
+            SellingSlot slot = slotGO.GetComponent<SellingSlot>();
             slot.Initialize(kvp.GetItemData(), kvp.GetQuantity());
 
+            sellingSlots.Add(slot);
             slotsFilled++;
         }
+    }
+
+    public void MoveItemsToShop() {
+        foreach(SellingSlot slot in sellingSlots) {
+            Inventory.Instance.RemoveItem(slot.GetItemData(), slot.GetQuantity());
+            ShopManager.Instance.AddItemToShop(slot.GetItemData(), slot.GetQuantity(), slot.GetCustomPrice());
+            Destroy(slot);
+        }
+        sellingSlots = new List<SellingSlot>();
     }
 }

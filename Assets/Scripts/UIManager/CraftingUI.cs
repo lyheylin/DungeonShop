@@ -6,26 +6,30 @@ using UnityEngine;
 public class CraftingUI : MonoBehaviour {
 
     [SerializeField] private InventoryPanelUI inventoryPanelUI;
-    [SerializeField] private ShopDisplayUI shopDisplayUI;
+    [SerializeField] private SellingSlotsDisplayUI sellingSlotsDisplayUI;
 
     private void OnEnable() {
         inventoryPanelUI.RefreshInventory();
-        shopDisplayUI.RefreshShopSlots();
+        sellingSlotsDisplayUI.RefreshShopSlots();
         if (GameManager.Instance != null) {
             GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
-            Debug.Log("LISTENING!");
+            DayCycleManager.Instance.OnCraftingPhaseEnded += Handle_OnCraftingStateEnded;
         }
     }
 
     private void OnDisable() {
         if (GameManager.Instance != null) {
             GameManager.Instance.OnCraftingStateStarted -= Handle_OnCraftingStateStarted;
+            DayCycleManager.Instance.OnCraftingPhaseEnded -= Handle_OnCraftingStateEnded;
         }
     }
 
     private void Handle_OnCraftingStateStarted(GameState state) {
         inventoryPanelUI.RefreshInventory();
-        shopDisplayUI.RefreshShopSlots();
+        sellingSlotsDisplayUI.RefreshShopSlots();
     }
 
+    private void Handle_OnCraftingStateEnded(int day) {
+        sellingSlotsDisplayUI.MoveItemsToShop();
+    }
 }

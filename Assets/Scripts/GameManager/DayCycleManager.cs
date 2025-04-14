@@ -9,6 +9,7 @@ public class DayCycleManager : MonoBehaviour {
     private int currentDay = 1;
     public event Action<int> OnDayStarted;
     public event Action<int> OnDayEnded;
+    public event Action<int> OnCraftingPhaseEnded;
 
     public int GetCurrentDay() => currentDay;
 
@@ -30,6 +31,7 @@ public class DayCycleManager : MonoBehaviour {
     }
 
     public void EndCraftingPhase() {
+        OnCraftingPhaseEnded?.Invoke(currentDay);
         GameManager.Instance.ChangeState(GameState.Shop);
     }
 

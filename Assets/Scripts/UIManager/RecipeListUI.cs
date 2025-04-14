@@ -7,7 +7,7 @@ public class RecipeListUI : MonoBehaviour {
     [SerializeField] private GameObject recipeButtonPrefab;
     [SerializeField] private Transform contentRoot;
     [SerializeField] private InventoryPanelUI inventoryUI;
-    [SerializeField] private ShopDisplayUI shopDisplayUI;
+    [SerializeField] private SellingSlotsDisplayUI shopDisplayUI;
 
     [SerializeField] private List<RecipeDataSO> availableRecipes;
 

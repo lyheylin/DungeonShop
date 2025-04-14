@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class ShopSlot {
-    public ItemDataSO item;
+    private ItemDataSO item;
     public int quantity;
     public int price;
 
@@ -13,4 +13,6 @@ public class ShopSlot {
         this.quantity = quantity;
         this.price = price;
     }
+
+    public ItemDataSO GetItemData() => item;
 }

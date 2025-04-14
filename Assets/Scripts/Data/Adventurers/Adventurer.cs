@@ -19,6 +19,7 @@ public class Adventurer {
     public int GetCurrentDefense() => currentDefense;
     public bool DidSurvive() => survivedLastRun;
     public List<LootItem> GetCollectedLoot() => collectedLoot;
+    public AdventurerDataSO GetAdventurerDataSO() => adventurer;
 
     public Adventurer(AdventurerDataSO adventurer) {
         this.adventurer = adventurer;
