@@ -7,7 +7,7 @@ public class ShopManager : MonoBehaviour {
 
     [SerializeField] private int maxShopSlots = 5;
     [SerializeField] private int gold = 0;
-    private List<ShopSlot> shopSlots = new();
+    private List<ShopItem> shopItems = new();
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -21,27 +21,27 @@ public class ShopManager : MonoBehaviour {
 
 
     //Shop slot management
-    public IReadOnlyList<ShopSlot> GetShopSlots() => shopSlots.AsReadOnly();
+    public IReadOnlyList<ShopItem> GetShopItems() => shopItems.AsReadOnly();
     public int GetMaxShopSlots() => maxShopSlots;
 
     public void AddItemToShop(ItemDataSO item, int quantity, int price) {
-        if (shopSlots.Count >= maxShopSlots) return;
+        if (shopItems.Count >= maxShopSlots) return;
         if (!item.IsSellable()) return;
 
-        shopSlots.Add(new ShopSlot(item, quantity, price));
+        shopItems.Add(new ShopItem(item, quantity, price));
         //Inventory.Instance.RemoveItem(item, 1); // Move from inventory double remove
         Debug.Log($"{item.GetName()} moved to shop at {price} gold.");
     }
 
-    public void RemoveItemFromShop(ShopSlot item) {
+    public void RemoveItemFromShop(ShopItem item) {
         //TODO
-        shopSlots.Remove(item);
+        shopItems.Remove(item);
         //Inventory.Instance.AddItem(item.GetItemData(), 1); // Return to inventory?
     }
 
 
     public void ClearShopSlots() {
-        shopSlots.Clear();
+        shopItems.Clear();
     }
 
     //Shop phase logic
@@ -60,19 +60,18 @@ public class ShopManager : MonoBehaviour {
         }
 
         Debug.Log("Shop phase ended!");
-        GameManager.Instance.ChangeState(GameState.Dungeon);
     }
 
     private void TrySellToAdventurer(AdventurerDataSO adventurer) {
-        if (shopSlots.Count == 0) return;
+        if (shopItems.Count == 0) return;
 
-        ShopSlot randomItem = shopSlots[Random.Range(0, shopSlots.Count)];
+        ShopItem randomItem = shopItems[Random.Range(0, shopItems.Count)];
         int acceptablePrice = randomItem.GetItemData().GetBasePrice() * 2;
 
-        if (randomItem.price <= acceptablePrice) {
-            Debug.Log($"{adventurer.GetAdventurerName()} bought {randomItem.GetItemData().GetName()} for {randomItem.price} gold!");
-            gold += randomItem.price;
-            shopSlots.Remove(randomItem);
+        if (randomItem.GetPrice() <= acceptablePrice) {
+            Debug.Log($"{adventurer.GetAdventurerName()} bought {randomItem.GetItemData().GetName()} for {randomItem.GetPrice()} gold!");
+            gold += randomItem.GetPrice();
+            shopItems.Remove(randomItem);
             //shopDisplay.RefreshShopSlots();
         } else {
             Debug.Log($"{adventurer.GetAdventurerName()} thought {randomItem.GetItemData().GetName()} was too expensive.");

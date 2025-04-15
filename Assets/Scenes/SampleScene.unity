@@ -3318,7 +3318,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 104}
+  m_CellSize: {x: 50, y: 74}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -3372,8 +3372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a23ed929e003d4abcfd5f717327f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sellingSlotPrefab: {fileID: 0}
-  gridRoot: {fileID: 0}
+  shopSlotPrefab: {fileID: 5565140328811497234, guid: 511f7d56e2ae15249b886a0173396ad3, type: 3}
+  gridRoot: {fileID: 822940717}
 --- !u!1 &941243758
 GameObject:
   m_ObjectHideFlags: 0
