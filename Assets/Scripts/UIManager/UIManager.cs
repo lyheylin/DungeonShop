@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button loadButton;
     [SerializeField] private Button inventoryButton;
     [SerializeField] private GameObject craftingUICanvas;
+    [SerializeField] private GameObject shopUICanvas;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -30,31 +31,23 @@ public class UIManager : MonoBehaviour {
 
         GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
         GameManager.Instance.OnShopStateStarted += Handle_OnShopStateStarted;
+        GameManager.Instance.OnDungeonStateStarted += Handle_OnDungeonStateStarted;
     }
 
-    
-
+   
     private void Handle_OnCraftingStateStarted(GameState state) {
         craftingUICanvas.SetActive(true);
     }
     private void Handle_OnShopStateStarted(GameState obj) {
         craftingUICanvas.SetActive(false);
+        shopUICanvas.SetActive(true);
+    }
+    private void Handle_OnDungeonStateStarted(GameState state) {
+        shopUICanvas.SetActive(false);
     }
 
+
     private void AdvanceToNextPhase() {
-        switch (GameManager.Instance.GetCurrentGameState()) {
-            case GameState.Crafting:
-                DayCycleManager.Instance.EndCraftingPhase();
-                break;
-            case GameState.Shop:
-                DayCycleManager.Instance.EndShopPhase();
-                break;
-            case GameState.Dungeon:
-                DayCycleManager.Instance.EndDungeonPhase();
-                break;
-            case GameState.Results:
-                DayCycleManager.Instance.FinishResultsAndEndDay();
-                break;
-        }
+        GameManager.Instance.AdvanceToNextState();
     }
 }

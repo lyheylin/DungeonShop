@@ -10,8 +10,18 @@ public class DayCycleManager : MonoBehaviour {
     public event Action<int> OnDayStarted;
     public event Action<int> OnDayEnded;
     public event Action<int> OnCraftingPhaseEnded;
+    public event Action<int> OnShopPhaseEnded;
 
     public int GetCurrentDay() => currentDay;
+
+    private void Start() {
+        GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
+        GameManager.Instance.OnShopStateStarted += Handle_OnShopStateStarted;
+        GameManager.Instance.OnDungeonStateStarted += Handle_OnDungeonStateStarted;
+        GameManager.Instance.OnResultStateStarted += Handle_OnResultStateStarted;
+        GameManager.Instance.OnResultStateEnded += Handle_OnResultStateEnded;
+    }
+
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -26,28 +36,30 @@ public class DayCycleManager : MonoBehaviour {
     public void StartDay() {
         Debug.Log($"Day {currentDay} started.");
         OnDayStarted?.Invoke(currentDay);
-
-        GameManager.Instance.ChangeState(GameState.Crafting);
     }
 
-    public void EndCraftingPhase() {
+
+    private void Handle_OnCraftingStateStarted(GameState state) {
+        //throw new NotImplementedException();
+    }
+
+    public void Handle_OnShopStateStarted(GameState state) {
         OnCraftingPhaseEnded?.Invoke(currentDay);
-        GameManager.Instance.ChangeState(GameState.Shop);
     }
 
-    public void EndShopPhase() {
-        GameManager.Instance.ChangeState(GameState.Dungeon);
-    }
-
-    public void StartDungeonPhase() {
+    public void Handle_OnDungeonStateStarted(GameState state) {
+        OnShopPhaseEnded?.Invoke(currentDay);
         FindObjectOfType<DungeonSimulator>().RunDungeon();
     }
 
     public void EndDungeonPhase() {
-        GameManager.Instance.ChangeState(GameState.Results);
     }
 
-    public void FinishResultsAndEndDay() {
+    public void Handle_OnResultStateStarted(GameState state) {
+
+    }
+
+    public void Handle_OnResultStateEnded(GameState state) {
         Debug.Log($"Day {currentDay} ended.");
         OnDayEnded?.Invoke(currentDay);
 

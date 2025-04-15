@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour{
 
     public event Action<GameState> OnCraftingStateStarted;
     public event Action<GameState> OnShopStateStarted;
+    public event Action<GameState> OnDungeonStateStarted;
+    public event Action<GameState> OnResultStateStarted;
+    public event Action<GameState> OnResultStateEnded;
 
     public GameState GetCurrentGameState() => CurrentState;
     private void Awake() {
@@ -27,6 +30,7 @@ public class GameManager : MonoBehaviour{
         ChangeState(GameState.MainMenu);
     }
 
+
     public void ChangeState(GameState newState) {
         CurrentState = newState;
         Debug.Log($"Game state changed to: {newState}");
@@ -37,20 +41,38 @@ public class GameManager : MonoBehaviour{
                 break;
             case GameState.Crafting:
                 OnCraftingStateStarted?.Invoke(CurrentState);
-                // Load crafting UI and scene elements
                 break;
             case GameState.Shop:
                 // Start shop phase
                 OnShopStateStarted?.Invoke(CurrentState);
                 break;
             case GameState.Dungeon:
-                DayCycleManager.Instance.StartDungeonPhase();
+                //Start
+                OnDungeonStateStarted?.Invoke(CurrentState);
                 break;
             case GameState.Results:
-                // Display results and loot
+                OnResultStateStarted?.Invoke(CurrentState);
                 break;
             case GameState.Pause:
                 // Pause the game
+                break;
+        }
+    }
+
+    public void AdvanceToNextState() {
+        switch (GetCurrentGameState()) {
+            case GameState.Crafting:
+                ChangeState(GameState.Shop);
+                break;
+            case GameState.Shop:
+                ChangeState(GameState.Dungeon);
+                break;
+            case GameState.Dungeon:
+                ChangeState(GameState.Results);
+                break;
+            case GameState.Results:
+                OnResultStateEnded?.Invoke(CurrentState);
+                ChangeState(GameState.Crafting);
                 break;
         }
     }

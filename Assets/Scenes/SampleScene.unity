@@ -673,6 +673,7 @@ MonoBehaviour:
   loadButton: {fileID: 2142021485}
   inventoryButton: {fileID: 1626004364}
   craftingUICanvas: {fileID: 2134294984}
+  shopUICanvas: {fileID: 822940716}
 --- !u!4 &142493857
 Transform:
   m_ObjectHideFlags: 0
@@ -1008,7 +1009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 582611761042499237, guid: 56d306dccc4f6754082d864c1277eeef, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 582611761042499237, guid: 56d306dccc4f6754082d864c1277eeef, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1044,7 +1045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 582611761042499237, guid: 56d306dccc4f6754082d864c1277eeef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 582611761042499237, guid: 56d306dccc4f6754082d864c1277eeef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1199,6 +1200,7 @@ RectTransform:
   m_Children:
   - {fileID: 143375906}
   - {fileID: 2134294989}
+  - {fileID: 822940717}
   - {fileID: 1047458590}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3269,14 +3271,14 @@ GameObject:
   - component: {fileID: 822940721}
   - component: {fileID: 822940720}
   - component: {fileID: 822940719}
-  - component: {fileID: 822940718}
+  - component: {fileID: 822940722}
   m_Layer: 5
   m_Name: ShopDisplayPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &822940717
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3289,27 +3291,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1996028672}
+  m_Father: {fileID: 214589781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 342.5, y: -105}
-  m_SizeDelta: {x: 215, y: 210}
+  m_AnchoredPosition: {x: 410, y: -105}
+  m_SizeDelta: {x: 313.3333, y: 210}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &822940718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 822940716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11b59ad8f1f82934f81f559a24e97b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopSlotPrefab: {fileID: 5565140328811497234, guid: b26823899ee8d5d49b8e54868a4b2aae, type: 3}
-  gridRoot: {fileID: 822940717}
 --- !u!114 &822940719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3372,6 +3360,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822940716}
   m_CullTransparentMesh: 1
+--- !u!114 &822940722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822940716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a23ed929e003d4abcfd5f717327f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sellingSlotPrefab: {fileID: 0}
+  gridRoot: {fileID: 0}
 --- !u!1 &941243758
 GameObject:
   m_ObjectHideFlags: 0
@@ -5585,7 +5587,7 @@ GameObject:
   - component: {fileID: 1329906944}
   - component: {fileID: 1329906945}
   m_Layer: 5
-  m_Name: ShopDisplayPanel
+  m_Name: SellingSlotsDisplayPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6826,7 +6828,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8149319}
-  - {fileID: 822940717}
   - {fileID: 1874143309}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7317,7 +7318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPanelUI: {fileID: 1216353190}
-  shopDisplayUI: {fileID: 1329906945}
+  sellingSlotsDisplayUI: {fileID: 1329906945}
 --- !u!1 &2142021484
 GameObject:
   m_ObjectHideFlags: 0

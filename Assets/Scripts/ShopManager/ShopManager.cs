@@ -29,14 +29,14 @@ public class ShopManager : MonoBehaviour {
         if (!item.IsSellable()) return;
 
         shopSlots.Add(new ShopSlot(item, quantity, price));
-        Inventory.Instance.RemoveItem(item, 1); // Move from inventory
+        //Inventory.Instance.RemoveItem(item, 1); // Move from inventory double remove
         Debug.Log($"{item.GetName()} moved to shop at {price} gold.");
     }
 
     public void RemoveItemFromShop(ShopSlot item) {
         //TODO
         shopSlots.Remove(item);
-        Inventory.Instance.AddItem(item.GetItemData(), 1); // Return to inventory?
+        //Inventory.Instance.AddItem(item.GetItemData(), 1); // Return to inventory?
     }
 
 
