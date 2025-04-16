@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopItem
@@ -16,5 +17,13 @@ public class ShopItem
         this.itemData = itemData;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public void RemoveItem(int quantity) {
+        if (quantity > this.quantity) {
+            Debug.LogWarning("Attempting to remove more items than possible.");
+            return;
+        }
+        this.quantity -= quantity;
     }
 }

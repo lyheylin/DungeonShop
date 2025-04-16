@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour {
@@ -7,6 +8,7 @@ public class ShopManager : MonoBehaviour {
 
     [SerializeField] private int maxShopSlots = 5;
     [SerializeField] private int gold = 0;
+    [SerializeField] private ShopUI shopUI;
     private List<ShopItem> shopItems = new();
 
     private void Awake() {
@@ -30,12 +32,19 @@ public class ShopManager : MonoBehaviour {
 
         shopItems.Add(new ShopItem(item, quantity, price));
         //Inventory.Instance.RemoveItem(item, 1); // Move from inventory double remove
-        Debug.Log($"{item.GetName()} moved to shop at {price} gold.");
+        LogManager.Instance.Log($"{item.GetName()} moved to shop at {price} gold.");
     }
 
-    public void RemoveItemFromShop(ShopItem item) {
+    public void RemoveItemFromShop(ShopItem item, int quantity) {
         //TODO
-        shopItems.Remove(item);
+        if (quantity > item.GetQuantity()) {
+            Debug.Log("Not enough items in shop!");
+            return;
+        }
+
+        item.RemoveItem(quantity);
+        if(item.GetQuantity()==0)
+            shopItems.Remove(item);
         //Inventory.Instance.AddItem(item.GetItemData(), 1); // Return to inventory?
     }
 
@@ -66,15 +75,17 @@ public class ShopManager : MonoBehaviour {
         if (shopItems.Count == 0) return;
 
         ShopItem randomItem = shopItems[Random.Range(0, shopItems.Count)];
-        int acceptablePrice = randomItem.GetItemData().GetBasePrice() * 2;
 
-        if (randomItem.GetPrice() <= acceptablePrice) {
-            Debug.Log($"{adventurer.GetAdventurerName()} bought {randomItem.GetItemData().GetName()} for {randomItem.GetPrice()} gold!");
+        if (adventurer.WillBuyItem(randomItem)) {
+            LogManager.Instance.Log($"{adventurer.GetAdventurerName()} bought {randomItem.GetItemData().GetName()} for {randomItem.GetPrice()} gold!");
             gold += randomItem.GetPrice();
-            shopItems.Remove(randomItem);
-            //shopDisplay.RefreshShopSlots();
+
+            adventurer.AddToInventory(randomItem.GetItemData(), 1);
+
+            RemoveItemFromShop(randomItem, 1);
+            shopUI.RefreshShopSlots();
         } else {
-            Debug.Log($"{adventurer.GetAdventurerName()} thought {randomItem.GetItemData().GetName()} was too expensive.");
+            LogManager.Instance.Log($"{adventurer.GetAdventurerName()} thought {randomItem.GetItemData().GetName()} was too expensive.");
         }
     }
 }

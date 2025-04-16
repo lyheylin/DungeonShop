@@ -22,6 +22,7 @@ public class ShopUI : MonoBehaviour
     private List<ShopSlot> sellingSlots = new List<ShopSlot>();
 
     public void RefreshShopSlots() {
+        sellingSlots = new List<ShopSlot>();
         foreach (Transform child in gridRoot)
             Destroy(child.gameObject);
 
