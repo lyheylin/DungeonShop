@@ -9,13 +9,14 @@ public class AdventurerViewerUI : MonoBehaviour {
     [SerializeField] private GameObject adventurerButtonPrefab;
     [SerializeField] private Transform inventoryGridContainer;
     [SerializeField] private GameObject inventorySlotPrefab;
-    [SerializeField] private Image equippedItemIcon;
-    [SerializeField] private TextMeshProUGUI equippedItemName;
+    [SerializeField] private Transform equippedItemDisplay;
 
-    private List<AdventurerDataSO> adventurers;
+    private List<AdventurerDataSO> adventurers = new();
 
-    public void Initialize(List<AdventurerDataSO> adventurerList) {
-        adventurers = adventurerList;
+    public void Initialize() {
+        foreach (Adventurer adventurer in AdventurerManager.Instance.GetActiveAdventurers()) {
+            adventurers.Add(adventurer.GetAdventurerDataSO());
+        }
 
         foreach (Transform child in adventurerButtonContainer)
             Destroy(child.gameObject);
@@ -30,6 +31,9 @@ public class AdventurerViewerUI : MonoBehaviour {
     private void ShowAdventurerDetails(AdventurerDataSO adventurer) {
         foreach (Transform child in inventoryGridContainer)
             Destroy(child.gameObject);
+        foreach (Transform child in equippedItemDisplay)
+            Destroy(child.gameObject);
+
 
         foreach (var item in adventurer.GetInventory()) {
             var slot = Instantiate(inventorySlotPrefab, inventoryGridContainer);
@@ -38,11 +42,9 @@ public class AdventurerViewerUI : MonoBehaviour {
         }
 
         if (adventurer.GetEquippedItem() != null) {
-            equippedItemIcon.sprite = adventurer.GetEquippedItem().GetIcon();
-            equippedItemName.text = adventurer.GetEquippedItem().GetName();
-        } else {
-            equippedItemIcon.sprite = null;
-            equippedItemName.text = "None";
+            var equipped = Instantiate(inventorySlotPrefab, equippedItemDisplay);
+            equipped.GetComponentInChildren<Image>().sprite = adventurer.GetEquippedItem().GetIcon();
+            equipped.GetComponentInChildren<TextMeshProUGUI>().text = adventurer.GetEquippedItem().GetName();
         }
     }
 }

@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Button inventoryButton;
     [SerializeField] private GameObject craftingUICanvas;
     [SerializeField] private GameObject shopUICanvas;
+    [SerializeField] private AdventurerViewerUI adventurerViewerUI;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -32,6 +33,7 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
         GameManager.Instance.OnShopStateStarted += Handle_OnShopStateStarted;
         GameManager.Instance.OnDungeonStateStarted += Handle_OnDungeonStateStarted;
+        adventurerViewerUI.Initialize();
     }
 
    
