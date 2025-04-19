@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
 
     [SerializeField] private GameObject shopSlotPrefab;
     [SerializeField] private Transform gridRoot;
+    [SerializeField] private Button openShopButton;
+
+    private void Start() {
+        openShopButton.onClick.AddListener(OnOpenShopButtonClicked);
+    }
     private void OnEnable() {
         RefreshShopSlots();
+        openShopButton.gameObject.SetActive(true); //?
         if (GameManager.Instance != null) {
         }
     }
@@ -35,5 +42,9 @@ public class ShopUI : MonoBehaviour
             sellingSlots.Add(slot);
             slotsFilled++;
         }
+    }
+    private void OnOpenShopButtonClicked() {
+        ShopManager.Instance.StartShopPhase();
+        openShopButton.gameObject.SetActive(false); 
     }
 }
