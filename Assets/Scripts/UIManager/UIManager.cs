@@ -33,23 +33,57 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
         GameManager.Instance.OnShopStateStarted += Handle_OnShopStateStarted;
         GameManager.Instance.OnDungeonStateStarted += Handle_OnDungeonStateStarted;
+        SaveManager.Instance.OnDataLoaded += Handle_OnDataLoaded;
         adventurerViewerUI.Initialize();
     }
 
-   
+    //handlers
+    private void Handle_OnDataLoaded(GameSaveData data) {
+        RefreshUIForCurrentGameState();
+    }
+
     private void Handle_OnCraftingStateStarted(GameState state) {
+        DisableMainPanel();
+
         craftingUICanvas.SetActive(true);
     }
     private void Handle_OnShopStateStarted(GameState obj) {
-        craftingUICanvas.SetActive(false);
+        DisableMainPanel();
+
         shopUICanvas.SetActive(true);
     }
     private void Handle_OnDungeonStateStarted(GameState state) {
-        shopUICanvas.SetActive(false);
+        DisableMainPanel();
     }
 
-
+    //
     private void AdvanceToNextPhase() {
         GameManager.Instance.AdvanceToNextState();
+    }
+
+    public void DisableMainPanel() {
+        craftingUICanvas.SetActive(false);
+        shopUICanvas.SetActive(false);
+    }
+    public void RefreshUIForCurrentGameState() {
+        GameState state = GameManager.Instance.GetCurrentGameState();
+
+        // Disable all panels first
+        DisableMainPanel();
+        adventurerViewerUI.gameObject.SetActive(false);
+
+        // Activate the correct one
+        switch (state) {
+            case GameState.Crafting:
+                craftingUICanvas.SetActive(true);
+                adventurerViewerUI.gameObject.SetActive(true);
+                break;
+            case GameState.Shop:
+                shopUICanvas.SetActive(true);
+                adventurerViewerUI.gameObject.SetActive(true);
+                break;
+                // Add other cases as needed
+        }
+
     }
 }

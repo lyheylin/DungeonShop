@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,8 @@ public class SaveManager : MonoBehaviour {
     public static SaveManager Instance { get; private set; }
 
     [SerializeField] private ItemDatabase itemDatabase;
+
+    public event Action<GameSaveData> OnDataLoaded;
 
     private string savePath => Path.Combine(Application.persistentDataPath, "save.json");
 
@@ -46,6 +49,8 @@ public class SaveManager : MonoBehaviour {
         AdventurerManager.Instance.LoadFromSaveData(data.adventurers, itemDatabase);
         ShopManager.Instance.LoadFromSaveData(data.shop, itemDatabase);
 
+
+        OnDataLoaded?.Invoke(data);
         Debug.Log("Game loaded.");
     }
 }
