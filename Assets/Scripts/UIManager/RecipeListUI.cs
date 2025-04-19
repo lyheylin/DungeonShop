@@ -21,6 +21,7 @@ public class RecipeListUI : MonoBehaviour {
             button.onClick.AddListener(() => {
                 bool success = CraftingManager.Instance.CraftRecipe(recipe);
                 if (success) {
+                    LogManager.Instance.Log($"Crafted {recipe.GetResultAmount()} {recipe.GetRecipeName()}");
                     inventoryUI.RefreshInventory();
                     shopDisplayUI.RefreshShopSlots();
                 }

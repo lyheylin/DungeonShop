@@ -4911,7 +4911,7 @@ MonoBehaviour:
   recipeButtonPrefab: {fileID: 707779593806063947, guid: af6637c0469eef244bb3f43076befb72, type: 3}
   contentRoot: {fileID: 616269740}
   inventoryUI: {fileID: 1216353190}
-  shopDisplayUI: {fileID: 0}
+  shopDisplayUI: {fileID: 1329906945}
   availableRecipes:
   - {fileID: 11400000, guid: 08388bfb647b40e4c8f0e4a967ca872c, type: 2}
 --- !u!1 &1019076330

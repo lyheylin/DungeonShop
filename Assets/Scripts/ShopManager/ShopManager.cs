@@ -54,6 +54,9 @@ public class ShopManager : MonoBehaviour {
     }
 
     //Shop phase logic
+    public void InitializeUI() {
+        shopUI.Initialize();
+    }
     public void StartShopPhase() {
         List<Adventurer> visitingAdventurers;
         Debug.Log("Shop phase started!");
@@ -88,4 +91,35 @@ public class ShopManager : MonoBehaviour {
             LogManager.Instance.Log($"{adventurer.GetAdventurerName()} thought {randomItem.GetItemData().GetName()} was too expensive.");
         }
     }
+
+    public ShopSaveData GetSaveData() {
+        var saveData = new ShopSaveData { shopItems = new List<ShopItemSaveData>() };
+
+        foreach (var item in shopItems) {
+            var existingEntry = saveData.shopItems.Find(entry => entry.itemName == item.GetItemData().GetName() && entry.price == item.GetPrice());
+            int quantity = item.GetQuantity();
+            if (existingEntry != null)
+                existingEntry.quantity += quantity;
+            else
+                saveData.shopItems.Add(new ShopItemSaveData {
+                    itemName = item.GetItemData().GetName(),
+                    quantity = quantity,
+                    price = item.GetPrice()
+                });
+        }
+        return saveData;
+    }
+
+    public void LoadFromSaveData(ShopSaveData data, ItemDatabase itemDatabase) {
+        shopItems.Clear();
+
+        foreach (var shopItemData in data.shopItems) {
+            var itemSO = itemDatabase.GetItemByName(shopItemData.itemName);
+            if (itemSO != null) {
+                    var shopItem = new ShopItem(itemSO, shopItemData.quantity, shopItemData.price);
+                    shopItems.Add(shopItem);
+                }
+        }
+    }
+
 }

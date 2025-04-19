@@ -19,18 +19,12 @@ public class SaveManager : MonoBehaviour {
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-    [System.Serializable]
-    private class GameSaveData {
-        public InventorySaveData inventory;
-        public TimeSaveData time;
-        // future: public AdventurerSaveData adventurers; etc.
-    }
-
     public void SaveGame() {
         var data = new GameSaveData {
             inventory = Inventory.Instance.GetSaveData(),
-            time = DayCycleManager.Instance.GetSaveData()
+            time = DayCycleManager.Instance.GetSaveData(),
+            adventurers = AdventurerManager.Instance.GetSaveData(), // You'll implement this
+            shop = ShopManager.Instance.GetSaveData()              // You'll implement this
         };
 
         string json = JsonUtility.ToJson(data, true);
@@ -49,6 +43,9 @@ public class SaveManager : MonoBehaviour {
 
         Inventory.Instance.LoadFromSaveData(data.inventory, itemDatabase);
         DayCycleManager.Instance.LoadFromSaveData(data.time);
+        AdventurerManager.Instance.LoadFromSaveData(data.adventurers, itemDatabase);
+        ShopManager.Instance.LoadFromSaveData(data.shop, itemDatabase);
+
         Debug.Log("Game loaded.");
     }
 }

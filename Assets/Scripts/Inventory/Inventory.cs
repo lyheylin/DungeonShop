@@ -70,7 +70,7 @@ public class Inventory : MonoBehaviour {
         var saveData = new InventorySaveData();
 
         foreach (var slot in items) {
-            saveData.items.Add(new InventoryItemEntry {
+            saveData.items.Add(new ItemEntry {
                 itemName = slot.GetItemData().GetName(),
                 quantity = slot.GetQuantity()
             });
