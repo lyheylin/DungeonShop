@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b802807c35a43418b6dde8b520a7aa, type: 3}
+  m_Name: Goblin
+  m_EditorClassIdentifier: 
+  monsterName: Goblin
+  dropTable: {fileID: 11400000, guid: 8b23da80d36738649a198fece28273a3, type: 2}
+  traits: 
+  baseHP: 50
+  baseATK: 10
+  monsterSprite: {fileID: 21300000, guid: dabf384c6bcfd8d4aa757b2120799646, type: 3}

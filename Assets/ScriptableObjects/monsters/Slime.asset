@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b802807c35a43418b6dde8b520a7aa, type: 3}
+  m_Name: Slime
+  m_EditorClassIdentifier: 
+  monsterName: Slime
+  dropTable: {fileID: 11400000, guid: ac009376e9e07f54fbaf7fd88e5c5a08, type: 2}
+  traits: 
+  baseHP: 100
+  baseATK: 5
+  monsterSprite: {fileID: 21300000, guid: bc614af484f3fc040b041be8ca1f94ee, type: 3}
