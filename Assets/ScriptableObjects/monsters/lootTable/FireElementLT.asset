@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdef03c7fce28834abd008b44bb7ac73, type: 3}
-  m_Name: MagmaGolemLT
+  m_Name: FireElementLT
   m_EditorClassIdentifier: 
   lootEntries:
-  - lootItem: {fileID: 11400000, guid: 3a1a1d3f28fd82f419d2643e0a8d20ab, type: 2}
-    dropRate: 0.6
-  - lootItem: {fileID: 11400000, guid: 606749eca7d8a154ea19b7b9470ca2d7, type: 2}
-    dropRate: 0.2
+  - lootItem: {fileID: 11400000, guid: 36199bbdc45620d4b9bee822e97974d1, type: 2}
+    dropRate: 0.655
