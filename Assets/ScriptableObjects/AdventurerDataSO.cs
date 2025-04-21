@@ -24,6 +24,7 @@ public class AdventurerDataSO : ScriptableObject {
     public Sprite portrait;
     [SerializeField] private List<AdventurerInventoryItem> inventory = new List<AdventurerInventoryItem>();
     [SerializeField] private ItemDataSO equippedItem;
+    private List<LootItemDataSO> lootItems = new();
     public string GetAdventurerName() => adventurerName;
     public int GetBaseHP() => baseHP;
     public int GetBaseAttack() => baseAttack;
@@ -38,6 +39,10 @@ public class AdventurerDataSO : ScriptableObject {
             existingItem.Quantity += quantity;
         else 
             inventory.Add(new AdventurerInventoryItem(item, quantity));
+    }
+
+    public void AddLoot(List<LootItemDataSO> loot) {
+        lootItems.AddRange(loot);
     }
 
     public void ClearInventory() {
