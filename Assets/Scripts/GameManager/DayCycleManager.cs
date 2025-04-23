@@ -49,7 +49,7 @@ public class DayCycleManager : MonoBehaviour {
 
     public void Handle_OnDungeonStateStarted(GameState state) {
         OnShopPhaseEnded?.Invoke(currentDay);
-        FindObjectOfType<DungeonSimulator>().RunDungeon();
+        //FindObjectOfType<DungeonSimulator>().RunDungeon();
     }
 
     public void EndDungeonPhase() {

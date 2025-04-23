@@ -462,6 +462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9092050619773548963}
   - component: {fileID: 8671846679375487748}
+  - component: {fileID: 452099667056372201}
   m_Layer: 5
   m_Name: DungeonSelectButtonPrefab
   m_TagString: Untagged
@@ -516,3 +517,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &452099667056372201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8307446825716610897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108af2e9e4b2024439f8901ba958a27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignedAdventurers: {fileID: 5533289516502508114}
+  buttonText: {fileID: 2944285820874954023}
+  button: {fileID: 8927641386969116975}

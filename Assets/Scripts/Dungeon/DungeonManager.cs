@@ -1,10 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 public class DungeonManager : MonoBehaviour {
     public List<DungeonRunAssignment> currentAssignments;
+    [SerializeField] private List<DungeonAreaSO> availableDungeons;
+    [SerializeField] private List<AdventurerDataSO> availableAdventurers;
+
+    public List<DungeonAreaSO> GetAvailableDungeons() => availableDungeons;
+    public List<AdventurerDataSO> GetAvailableAdventurers () => availableAdventurers;
+
+
+    public static DungeonManager Instance { get; private set; }
+
+    private void Awake() {
+        if (Instance != null && Instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    public void StartDungeonPhase(Dictionary<DungeonAreaSO, List<AdventurerDataSO>> assignments) {
+        // Implement your dungeon simulation logic using the assignments here.
+        Debug.Log("Dungeon simulation starting with assignments:");
+        foreach (var kvp in assignments) {
+            Debug.Log($"{kvp.Key.GetAreaName()}: {string.Join(", ", kvp.Value.Select(a => a.GetAdventurerName()))}");
+        }
+
+        // Transition to Dungeon phase or begin simulation...
+    }
+
 
     public void AssignAdventurer(AdventurerDataSO adventurer, DungeonAreaSO area) {
         currentAssignments.Add(new DungeonRunAssignment {

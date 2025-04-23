@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject craftingUICanvas;
     [SerializeField] private GameObject shopUICanvas;
     [SerializeField] private AdventurerViewerUI adventurerViewerUI;
+    [SerializeField] private GameObject dungeonUICanvas;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -54,6 +55,8 @@ public class UIManager : MonoBehaviour {
     }
     private void Handle_OnDungeonStateStarted(GameState state) {
         DisableMainPanel();
+
+        dungeonUICanvas.SetActive(true);
     }
 
     //
@@ -64,6 +67,7 @@ public class UIManager : MonoBehaviour {
     public void DisableMainPanel() {
         craftingUICanvas.SetActive(false);
         shopUICanvas.SetActive(false);
+        dungeonUICanvas.SetActive(false);
     }
     public void RefreshUIForCurrentGameState() {
         GameState state = GameManager.Instance.GetCurrentGameState();
@@ -80,6 +84,10 @@ public class UIManager : MonoBehaviour {
                 break;
             case GameState.Shop:
                 shopUICanvas.SetActive(true);
+                adventurerViewerUI.gameObject.SetActive(true);
+                break;
+            case GameState.Dungeon:
+                dungeonUICanvas.SetActive(true);
                 adventurerViewerUI.gameObject.SetActive(true);
                 break;
                 // Add other cases as needed
