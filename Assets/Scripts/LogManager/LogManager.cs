@@ -8,15 +8,16 @@ public class LogManager : MonoBehaviour {
     public static LogManager Instance { get; private set; }
 
     [SerializeField] private TMP_Text logText;
-    [SerializeField] private int maxLines = 200;
     [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private int maxLines = 10;
     [SerializeField] private float characterDelay = 0.02f;
-
     [SerializeField] private AudioSource typeSoundSource;
     [SerializeField] private AudioClip typeSoundClip;
 
-    private readonly Queue<string> logLines = new();
-    private Coroutine currentTypingCoroutine;
+    private Queue<string> logLines = new();
+    private Queue<string> pendingMessages = new();
+
+    private Coroutine typingCoroutine;
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -27,55 +28,45 @@ public class LogManager : MonoBehaviour {
     }
 
     public void Log(string message) {
-        if (logLines.Count >= maxLines)
-            logLines.Dequeue();
+        pendingMessages.Enqueue(message);
 
-        logLines.Enqueue(message);
-
-        if (currentTypingCoroutine != null) 
-            StopCoroutine(currentTypingCoroutine);
-        
-
-        currentTypingCoroutine = StartCoroutine(TypeNewLine(message));
-    }
-
-    //Retype everything style
-    private IEnumerator TypeText() {
-        logText.text = "";
-        var allText = string.Join("\n", logLines);
-        int charIndex = 0;
-
-        while (charIndex < allText.Length) {
-            logText.text += allText[charIndex];
-            charIndex++;
-            yield return new WaitForSeconds(characterDelay);
+        if (typingCoroutine == null) {
+            typingCoroutine = StartCoroutine(ProcessQueue());
         }
 
-        currentTypingCoroutine = null;
+        scrollRect.verticalNormalizedPosition = 0f;
     }
 
-    private IEnumerator TypeNewLine(string newLine) {
-        if (logLines.Count > 1) {
-            logText.text = string.Join("\n", logLines).Replace(newLine, "");
-        } else {
-            logText.text = "";
-        }
+    private IEnumerator ProcessQueue() {
+        while (pendingMessages.Count > 0) {
+            string message = pendingMessages.Dequeue();
 
-        string currentText = logText.text;
+            if (logLines.Count >= maxLines)
+                logLines.Dequeue();
 
-        for (int i = 0; i < newLine.Length; i++) {
-            currentText += newLine[i];
-            logText.text = currentText;
+            logLines.Enqueue(message);
 
-            // Play sound for visible characters (skip spaces for subtlety)
-            if (typeSoundClip != null && newLine[i] != ' ') {
-                typeSoundSource.PlayOneShot(typeSoundClip);
+            // Redraw previous lines without the current one
+            var linesToShow = new List<string>(logLines);
+            linesToShow.Remove(message);
+            logText.text = string.Join("\n", linesToShow) + (linesToShow.Count > 0 ? "\n" : "");
+
+            string currentText = logText.text;
+
+            for (int i = 0; i < message.Length; i++) {
+                currentText += message[i];
+                logText.text = currentText;
+
+                if (typeSoundClip != null && message[i] != ' ')
+                    typeSoundSource.PlayOneShot(typeSoundClip);
+
+                yield return new WaitForSeconds(characterDelay);
             }
 
-            yield return new WaitForSeconds(characterDelay);
+            yield return new WaitForSeconds(0.2f); // brief pause before next message
         }
 
-        currentTypingCoroutine = null;
+        typingCoroutine = null;
     }
 
     /*
