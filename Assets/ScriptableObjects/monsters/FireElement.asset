@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b802807c35a43418b6dde8b520a7aa, type: 3}
   m_Name: FireElement
   m_EditorClassIdentifier: 
-  monsterName: 
+  monsterName: Fire Element
   dropTable: {fileID: 11400000, guid: 110856a9cd54c54439be0fb0def4d4d7, type: 2}
   traits: 
   baseHP: 40

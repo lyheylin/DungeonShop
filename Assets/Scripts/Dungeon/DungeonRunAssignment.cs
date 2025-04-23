@@ -7,4 +7,9 @@ using UnityEngine;
 public class DungeonRunAssignment {
     public AdventurerDataSO adventurer;
     public DungeonAreaSO targetArea;
+
+    public DungeonRunAssignment(AdventurerDataSO adventurer, DungeonAreaSO targetArea) {
+        this.adventurer = adventurer;
+        this.targetArea = targetArea;
+    }
 }

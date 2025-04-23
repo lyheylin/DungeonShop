@@ -5,10 +5,10 @@ using UnityEngine;
 
 
 public class DungeonManager : MonoBehaviour {
-    public List<DungeonRunAssignment> currentAssignments;
     [SerializeField] private List<DungeonAreaSO> availableDungeons;
     [SerializeField] private List<AdventurerDataSO> availableAdventurers;
 
+    private List<DungeonRunAssignment> currentAssignments;
     public List<DungeonAreaSO> GetAvailableDungeons() => availableDungeons;
     public List<AdventurerDataSO> GetAvailableAdventurers () => availableAdventurers;
 
@@ -24,21 +24,20 @@ public class DungeonManager : MonoBehaviour {
     }
 
     public void StartDungeonPhase(Dictionary<DungeonAreaSO, List<AdventurerDataSO>> assignments) {
+        currentAssignments = new List<DungeonRunAssignment> ();
         // Implement your dungeon simulation logic using the assignments here.
         Debug.Log("Dungeon simulation starting with assignments:");
         foreach (var kvp in assignments) {
             Debug.Log($"{kvp.Key.GetAreaName()}: {string.Join(", ", kvp.Value.Select(a => a.GetAdventurerName()))}");
+            foreach (var adv in kvp.Value) {
+                currentAssignments.Add(new DungeonRunAssignment(adv, kvp.Key));//Available for adding more variables into the assignment.
+            }
         }
 
+        foreach (var assignment in currentAssignments) {
+            SimulateDungeonRun(assignment.adventurer, assignment.targetArea);
+        }
         // Transition to Dungeon phase or begin simulation...
-    }
-
-
-    public void AssignAdventurer(AdventurerDataSO adventurer, DungeonAreaSO area) {
-        currentAssignments.Add(new DungeonRunAssignment {
-            adventurer = adventurer,
-            targetArea = area
-        });
     }
 
     public void StartDungeonPhase() {
@@ -48,14 +47,18 @@ public class DungeonManager : MonoBehaviour {
     }
 
     private void SimulateDungeonRun(AdventurerDataSO adventurer, DungeonAreaSO area) {
+        LogManager.Instance.Log($"{adventurer.GetAdventurerName()} exploring the {area.GetAreaName()} area.");
         List<LootItemDataSO> totalLoot = new List<LootItemDataSO>();
 
         // For now: pick 3 random monsters and simulate drops
         List<MonsterDataSO> monsters = area.GetMonsters();
         for (int i = 0; i < 3; i++) {
-
             var monster = monsters[Random.Range(0, monsters.Count)];
             var drops = GetLootFromMonster(monster);
+            LogManager.Instance.Log($"...and fought a {monster.GetMonsterName()}.");
+            foreach(var drop in drops) {
+                LogManager.Instance.Log($"Received {drop.GetName()}.");
+            }
             totalLoot.AddRange(drops);
         }
 

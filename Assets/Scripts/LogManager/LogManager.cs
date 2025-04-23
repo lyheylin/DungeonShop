@@ -8,7 +8,7 @@ public class LogManager : MonoBehaviour {
     public static LogManager Instance { get; private set; }
 
     [SerializeField] private TMP_Text logText;
-    [SerializeField] private int maxLines = 50;
+    [SerializeField] private int maxLines = 200;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private float characterDelay = 0.02f;
 
@@ -27,7 +27,7 @@ public class LogManager : MonoBehaviour {
     }
 
     public void Log(string message) {
-        if (logLines.Count >= maxLines) 
+        if (logLines.Count >= maxLines)
             logLines.Dequeue();
 
         logLines.Enqueue(message);
