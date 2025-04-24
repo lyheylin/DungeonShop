@@ -19,12 +19,19 @@ public class LogManager : MonoBehaviour {
 
     private Coroutine typingCoroutine;
 
+    private bool skipRequested = false;
+    
     private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
             return;
         }
         Instance = this;
+    }
+
+    public void SkipTyping() {
+        if(typingCoroutine != null)
+            skipRequested = true;
     }
 
     public void Log(string message) {
@@ -60,7 +67,16 @@ public class LogManager : MonoBehaviour {
                 if (typeSoundClip != null && message[i] != ' ')
                     typeSoundSource.PlayOneShot(typeSoundClip);
 
+                if (skipRequested)
+                    break;
+
                 yield return new WaitForSeconds(characterDelay);
+            }
+
+            if (skipRequested) {
+                currentText = string.Join("\n", logLines);
+                logText.text = currentText;
+                skipRequested = false;
             }
 
             yield return new WaitForSeconds(0.2f); // brief pause before next message
