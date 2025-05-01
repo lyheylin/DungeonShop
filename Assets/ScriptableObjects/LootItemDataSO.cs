@@ -16,9 +16,11 @@ public class LootItemDataSO : ScriptableObject {
     [SerializeField] private string description;
     [SerializeField] private LootRarity rarity;
     [SerializeField] private Sprite icon;
-
+    [SerializeField] private int baseSellingPrice;
+    
     public string GetName() => lootName;
     public string GetDescription() => description;
     public LootRarity GetRarity() => rarity;
     public Sprite GetIcon() => icon;
+    public int GetBaseSellingPrice() => baseSellingPrice;
 }
