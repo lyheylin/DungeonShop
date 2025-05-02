@@ -5,15 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System;
 
-public class QuantitySelector : MonoBehaviour {
+public class QuantitySliderUI : MonoBehaviour {
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private Button plusButton;
     [SerializeField] private Button minusButton;
-    public UnityEvent<int> onValueChanged;
+    public event Action<int> OnValueChanged;
 
     private int value = 0;
     private Coroutine holdCoroutine;
+    private int maxAmount = 0;
 
     private void Start() {
         inputField.text = value.ToString();
@@ -22,6 +24,9 @@ public class QuantitySelector : MonoBehaviour {
         minusButton.onClick.AddListener(() => ChangeValue(-1));
     }
 
+    public void Initialize(int maxAmount) {
+        this.maxAmount = maxAmount;
+    }
 
     private void SetupHoldButton(Button button, UnityAction action) {
         // Initial click
@@ -67,13 +72,13 @@ public class QuantitySelector : MonoBehaviour {
     private void ChangeValue(int delta) {
         value = Mathf.Max(0, value + delta);
         inputField.text = value.ToString();
-        onValueChanged?.Invoke(value);
+        OnValueChanged?.Invoke(value);
     }
 
     private void OnInputChanged(string input) {
         if (int.TryParse(input, out int newValue)) {
             value = Mathf.Max(0, newValue);
-            onValueChanged?.Invoke(value);
+            OnValueChanged?.Invoke(value);
         } else {
             inputField.text = value.ToString();
         }

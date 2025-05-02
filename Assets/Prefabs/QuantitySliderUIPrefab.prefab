@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 1336740592170137594}
   - component: {fileID: 7747778864975108483}
   m_Layer: 5
-  m_Name: QuantitySliderPrefab
+  m_Name: QuantitySliderUIPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
