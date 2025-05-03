@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -60,6 +61,9 @@ public class ResultManager : MonoBehaviour {
             maxQuantity = quantity,
             selectedQuantity = quantity
         };
+
+        var rect = containingUI.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x+ui.GetComponent<RectTransform>().sizeDelta.x, rect.sizeDelta.y);
     }
 
     public void NotifyItemPurchaseChanged(AdventurerDataSO adventurer, LootItemDataSO lootItem, int quantity, int unitPrice) {

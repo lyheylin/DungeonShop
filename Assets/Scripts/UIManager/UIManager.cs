@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject shopUICanvas;
     [SerializeField] private AdventurerViewerUI adventurerViewerUI;
     [SerializeField] private GameObject dungeonUICanvas;
+    [SerializeField] private GameObject resultUICanvas;
 
     private void Start() {
         mainMenuButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.MainMenu));
@@ -34,6 +35,7 @@ public class UIManager : MonoBehaviour {
         GameManager.Instance.OnCraftingStateStarted += Handle_OnCraftingStateStarted;
         GameManager.Instance.OnShopStateStarted += Handle_OnShopStateStarted;
         GameManager.Instance.OnDungeonStateStarted += Handle_OnDungeonStateStarted;
+        GameManager.Instance.OnResultStateStarted += Handle_OnResultStateStarted;
         SaveManager.Instance.OnDataLoaded += Handle_OnDataLoaded;
         adventurerViewerUI.Initialize();
     }
@@ -58,7 +60,11 @@ public class UIManager : MonoBehaviour {
 
         dungeonUICanvas.SetActive(true);
     }
+    private void Handle_OnResultStateStarted(GameState state) {
+        DisableMainPanel();
 
+        resultUICanvas.SetActive(true);
+    }
     //
     private void AdvanceToNextPhase() {
         GameManager.Instance.AdvanceToNextState();
@@ -68,6 +74,7 @@ public class UIManager : MonoBehaviour {
         craftingUICanvas.SetActive(false);
         shopUICanvas.SetActive(false);
         dungeonUICanvas.SetActive(false);
+        resultUICanvas.SetActive(false);
     }
     public void RefreshUIForCurrentGameState() {
         GameState state = GameManager.Instance.GetCurrentGameState();
@@ -88,6 +95,10 @@ public class UIManager : MonoBehaviour {
                 break;
             case GameState.Dungeon:
                 dungeonUICanvas.SetActive(true);
+                adventurerViewerUI.gameObject.SetActive(true);
+                break;
+            case GameState.Results:
+                resultUICanvas.SetActive(true);
                 adventurerViewerUI.gameObject.SetActive(true);
                 break;
                 // Add other cases as needed

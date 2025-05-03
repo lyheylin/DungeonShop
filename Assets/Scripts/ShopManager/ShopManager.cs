@@ -25,6 +25,7 @@ public class ShopManager : MonoBehaviour {
     //Shop slot management
     public IReadOnlyList<ShopItem> GetShopItems() => shopItems.AsReadOnly();
     public int GetMaxShopSlots() => maxShopSlots;
+    public int GetGold() => gold;
 
     public void AddItemToShop(ItemDataSO item, int quantity, int price) {
         if (shopItems.Count >= maxShopSlots) return;
