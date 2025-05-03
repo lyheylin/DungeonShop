@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 
 [System.Serializable]
@@ -15,6 +16,16 @@ public class AdventurerInventoryItem {
     }
 }
 
+public class AdventurerLootItem {
+    public LootItemDataSO LootItemDataSO;
+    public int Quantity;
+
+    public AdventurerLootItem(LootItemDataSO lootItemDataSO, int quantity) {
+        LootItemDataSO = lootItemDataSO;
+        Quantity = quantity;
+    }
+}
+
 [CreateAssetMenu(fileName = "New Adventurer", menuName = "Game/Adventurer")]
 public class AdventurerDataSO : ScriptableObject {
     [SerializeField] private string adventurerName;
@@ -24,7 +35,7 @@ public class AdventurerDataSO : ScriptableObject {
     public Sprite portrait;
     [SerializeField] private List<AdventurerInventoryItem> inventory = new List<AdventurerInventoryItem>();
     [SerializeField] private ItemDataSO equippedItem;
-    private List<LootItemDataSO> lootItems = new();
+    private List<AdventurerLootItem> lootItems = new();
     public string GetAdventurerName() => adventurerName;
     public int GetBaseHP() => baseHP;
     public int GetBaseAttack() => baseAttack;
@@ -41,8 +52,18 @@ public class AdventurerDataSO : ScriptableObject {
             inventory.Add(new AdventurerInventoryItem(item, quantity));
     }
 
-    public void AddLoot(List<LootItemDataSO> loot) {
-        lootItems.AddRange(loot);
+
+    public void AddLoot(List<LootItemDataSO> loots) {
+        foreach(var loot in loots) {
+            AddLoot(loot);
+        }
+    }
+    public void AddLoot(LootItemDataSO loot) {
+        var existingItem = lootItems.Find(i => i.LootItemDataSO == loot);
+        if (existingItem != null)
+            existingItem.Quantity += 1;
+        else
+            lootItems.Add(new AdventurerLootItem(loot, 1));
     }
 
     public void ClearInventory() {
@@ -71,6 +92,10 @@ public class AdventurerDataSO : ScriptableObject {
             EquipItem(equipmentList[0].ItemData);
             LogManager.Instance.Log($"{GetAdventurerName()} equipped {equipmentList[0].ItemData.GetName()}.");
         }
+    }
+
+    public List<AdventurerLootItem> GetLootItems() {
+        return lootItems;
     }
     // Future expansion: class type, equipment preferences, traits, etc.
 }

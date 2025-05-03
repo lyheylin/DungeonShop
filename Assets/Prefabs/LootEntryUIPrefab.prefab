@@ -588,9 +588,6 @@ MonoBehaviour:
   inputField: {fileID: 8641515744828843559}
   plusButton: {fileID: 5210272903508145672}
   minusButton: {fileID: 964934459506836533}
-  onValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5364575962985521025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1364,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f84f24f00b70e4781d343ffc02f530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIconUI: {fileID: 8882138559791988120}
+  quantityPriceText: {fileID: 503638976502924791}
+  quantitySlider: {fileID: 6840307082459475214}
 --- !u!1001 &4098363577024101630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1469,3 +1469,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2489615798554888295, guid: d6f4080679e1e7446bce1404e43a8cbd, type: 3}
   m_PrefabInstance: {fileID: 4098363577024101630}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8882138559791988120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4874018499692380518, guid: d6f4080679e1e7446bce1404e43a8cbd, type: 3}
+  m_PrefabInstance: {fileID: 4098363577024101630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92026c79842b3f4394a951ff1244f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
