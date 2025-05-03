@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class ItemIconWithTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     [SerializeField] private Image iconImage;
     [SerializeField] private GameObject tooltip;
+    [SerializeField] private Image tooltipImage;
     [SerializeField] private TMP_Text tooltipText;
 
     private ItemDataSO currentItem;
@@ -15,13 +16,15 @@ public class ItemIconWithTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public void SetItem(ItemDataSO itemData) {
         currentItem = itemData;
-        iconImage.sprite = itemData.GetIcon(); 
+        iconImage.sprite = itemData.GetIcon();
+        tooltipImage.sprite = itemData.GetIcon();
         tooltipText.text = GetTooltipText(itemData);
     }
 
     public void SetLootItem(LootItemDataSO itemData) {
         currentLootItem = itemData;
         iconImage.sprite = itemData.GetIcon();
+        tooltipImage.sprite = itemData.GetIcon();
         tooltipText.text = GetTooltipText(itemData);
     }
 
