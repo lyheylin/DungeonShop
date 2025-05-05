@@ -11,15 +11,13 @@ public class LootEntryUI : MonoBehaviour {
 
     private LootItemDataSO lootDropEntry;
     private AdventurerDataSO adventurerRef;
-    private ResultManager resultManager;
 
     private int maxAmount;
     private int currentPrice;
 
-    public void Setup(ResultManager resultManager, LootItemDataSO entry, AdventurerDataSO owner, int price, int quantity) {
+    public void Setup(ResultPanelUI panelUI, LootItemDataSO entry, AdventurerDataSO owner, int price, int quantity) {
         lootDropEntry = entry;
         adventurerRef = owner;
-        this.resultManager = resultManager;
 
         itemIconUI.SetLootItem(entry);
         quantityPriceText.text = $"x {quantity}, price: {price}g";
@@ -28,10 +26,11 @@ public class LootEntryUI : MonoBehaviour {
         currentPrice = price;
 
         quantitySlider.Initialize(quantity);
-        quantitySlider.OnValueChanged += OnQuantityChanged;
-    }
-
-    private void OnQuantityChanged(int newQuantity) {
-        //resultPanel.NotifyItemPurchaseChanged(adventurerRef, lootDropEntry, newQuantity, currentPrice);
+        quantitySlider.OnValueChanged += newQuantity => {
+            panelUI.NotifyQuantityChanged(owner, entry, newQuantity);
+            ResultManager.Instance.NotifyItemPurchaseChanged(adventurerRef, lootDropEntry, newQuantity, currentPrice);
+        };
     }
 }
+
+

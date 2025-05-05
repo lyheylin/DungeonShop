@@ -8,20 +8,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 using static UnityEngine.UI.GridLayoutGroup;
+using Debug = UnityEngine.Debug;
 
 public class ResultManager : MonoBehaviour {
-    [SerializeField] private Transform resultListParent;
-    [SerializeField] private AdventurerLootEntryUI advLootEntryPrefab;
-    [SerializeField] private LootEntryUI lootEntryPrefab;
-    [SerializeField] private TMP_Text totalGoldText;
-    [SerializeField] private TMP_Text availableGoldText;
-    [SerializeField] private Button confirmPurchaseButton;
+    public static ResultManager Instance { get; private set; }
 
     private Dictionary<(AdventurerDataSO, LootItemDataSO), PurchaseData> currentPurchases = new();
+    private List<AdventurerDataSO> activeAdventurers;
     private int availableGold;
-
-
-    public static ResultManager Instance { get; private set; }
 
     private void Awake() {
         if (Instance != null && Instance != this) {
@@ -31,75 +25,74 @@ public class ResultManager : MonoBehaviour {
         Instance = this;
     }
 
-    public void SetupResults(List<AdventurerDataSO> adventurers, int startingGold) {
+    public void InitializeResults(List<AdventurerDataSO> adventurers, int startingGold) {
+        activeAdventurers = adventurers;
         availableGold = startingGold;
         currentPurchases.Clear();
-        ClearPreviousEntries();
 
         foreach (var adventurer in adventurers) {
-            var ui = Instantiate(advLootEntryPrefab, resultListParent);
-            ui.Setup(adventurer);
-
-            var lootItems = adventurer.GetLootItems(); 
-            foreach (var entry in lootItems) {
-                CreateLootEntryUI(ui, adventurer, entry.LootItemDataSO, entry.LootItemDataSO.GetBaseSellingPrice(), entry.Quantity);
+            foreach (var entry in adventurer.GetLootItems()) {
+                var key = (adventurer, entry.LootItemDataSO);
+                currentPurchases[key] = new PurchaseData {
+                    owner = adventurer,
+                    item = entry.LootItemDataSO,
+                    pricePerUnit = entry.LootItemDataSO.GetBaseSellingPrice(),
+                    maxQuantity = entry.Quantity,
+                    selectedQuantity = entry.Quantity
+                };
             }
         }
-
-        UpdateGoldDisplay();
     }
 
-    private void CreateLootEntryUI(AdventurerLootEntryUI containingUI, AdventurerDataSO adventurer, LootItemDataSO item, int price, int quantity) {
-        var ui = Instantiate(lootEntryPrefab, containingUI.GetContainer());
-        ui.Setup(this, item, adventurer, price, quantity);
+    public IReadOnlyList<AdventurerDataSO> GetAdventurers() => activeAdventurers;
 
-        var key = (adventurer, item);
-        currentPurchases[key] = new PurchaseData {
-            owner = adventurer,
-            item = item,
-            pricePerUnit = price,
-            maxQuantity = quantity,
-            selectedQuantity = quantity
-        };
+    public List<PurchaseData> GetLootForAdventurer(AdventurerDataSO adventurer) {
+        return currentPurchases.Values
+            .Where(p => p.owner == adventurer)
+            .ToList();
     }
+
+    public int GetTotalCost() {
+        return currentPurchases.Values.Sum(p => p.selectedQuantity * p.pricePerUnit);
+    }
+
+    public int GetAvailableGold() => availableGold;
+
+    public bool CanAfford() => GetTotalCost() <= availableGold;
 
     public void NotifyItemPurchaseChanged(AdventurerDataSO adventurer, LootItemDataSO lootItem, int quantity, int unitPrice) {
+        Debug.Log($"Purchase quantity changed.");
         var key = (adventurer, lootItem);
-        if (!currentPurchases.ContainsKey(key)) return;
 
-        currentPurchases[key].selectedQuantity = quantity;
-        UpdateGoldDisplay();
+        if (!currentPurchases.TryGetValue(key, out var data)) {
+            Debug.Log($"PurchaseData not found for {adventurer.name} - {lootItem.name}");
+            return;
+        }
+
+        data.selectedQuantity = quantity;
+        Debug.Log($"Total gold needed is now {GetTotalCost()}g");
     }
 
-    private void UpdateGoldDisplay() {
-        int totalCost = currentPurchases.Values.Sum(p => p.selectedQuantity * p.pricePerUnit);
-        totalGoldText.text = $"Total: {totalCost}g";
-        availableGoldText.text = $"Gold: {availableGold}g";
-
-        confirmPurchaseButton.interactable = totalCost <= availableGold;
-    }
-
-    private void ClearPreviousEntries() {
-        foreach (Transform child in resultListParent)
-            Destroy(child.gameObject);
+    public void SetSelectedQuantity(AdventurerDataSO owner, LootItemDataSO item, int quantity) {
+        var key = (owner, item);
+        if (currentPurchases.ContainsKey(key)) {
+            currentPurchases[key].selectedQuantity = quantity;
+        }
     }
 
     public void ConfirmPurchases() {
-        int totalCost = currentPurchases.Values.Sum(p => p.selectedQuantity * p.pricePerUnit);
+        int totalCost = GetTotalCost();
         if (totalCost > availableGold) return;
 
         availableGold -= totalCost;
 
         foreach (var entry in currentPurchases.Values) {
-            // You may want to log, animate, or influence adventurer behavior here
-            //entry.owner.RecordLootSale(entry.item, entry.selectedQuantity, entry.pricePerUnit);
-            //InventorySystem.Instance.AddItem(entry.item, entry.selectedQuantity);
+            // Placeholder: affect adventurers later
+            // InventorySystem.Instance.AddItem(entry.item, entry.selectedQuantity);
         }
-
-        // You could transition to the next phase here
     }
 
-    private class PurchaseData {
+    public class PurchaseData {
         public AdventurerDataSO owner;
         public LootItemDataSO item;
         public int pricePerUnit;
