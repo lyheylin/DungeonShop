@@ -16,3 +16,4 @@ MonoBehaviour:
   description: Wings of bats.
   rarity: 0
   icon: {fileID: 21300000, guid: 4dacdb0ce52718b46b12d59919c8094e, type: 3}
+  baseSellingPrice: 50

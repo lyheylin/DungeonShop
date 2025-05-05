@@ -16,3 +16,4 @@ MonoBehaviour:
   description: A scavaged scrap of cloth.
   rarity: 0
   icon: {fileID: 21300000, guid: ec12186ebd60ca94488e2d4be70208f1, type: 3}
+  baseSellingPrice: 35

@@ -16,3 +16,4 @@ MonoBehaviour:
   description: Ears of goblins, gross.
   rarity: 0
   icon: {fileID: 21300000, guid: 9acbf7e8bd6381d4093e068131fef8d9, type: 3}
+  baseSellingPrice: 40

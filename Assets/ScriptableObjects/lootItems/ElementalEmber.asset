@@ -17,3 +17,4 @@ MonoBehaviour:
     touch."
   rarity: 0
   icon: {fileID: 21300000, guid: 77a72517fc55f7341b76d9916be9b0bb, type: 3}
+  baseSellingPrice: 88

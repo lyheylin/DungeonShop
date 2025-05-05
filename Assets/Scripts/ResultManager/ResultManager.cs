@@ -38,7 +38,7 @@ public class ResultManager : MonoBehaviour {
                     item = entry.LootItemDataSO,
                     pricePerUnit = entry.LootItemDataSO.GetBaseSellingPrice(),
                     maxQuantity = entry.Quantity,
-                    selectedQuantity = entry.Quantity
+                    selectedQuantity = 0
                 };
             }
         }

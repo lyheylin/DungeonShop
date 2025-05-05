@@ -16,3 +16,4 @@ MonoBehaviour:
   description: Clump of Dirt.
   rarity: 0
   icon: {fileID: 21300000, guid: 35d4a5f26786e994b86db54ba9823572, type: 3}
+  baseSellingPrice: 33

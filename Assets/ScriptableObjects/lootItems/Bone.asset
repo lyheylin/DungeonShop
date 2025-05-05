@@ -16,3 +16,4 @@ MonoBehaviour:
   description: A brittle, yellowed bone from a goblin.
   rarity: 0
   icon: {fileID: 21300000, guid: 45f7910bbb99be14883f26fc28c5f084, type: 3}
+  baseSellingPrice: 45
