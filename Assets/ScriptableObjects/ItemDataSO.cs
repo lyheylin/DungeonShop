@@ -12,21 +12,19 @@ public enum ItemType {
 
 [CreateAssetMenu(fileName = "NewItem", menuName = "Game/Item")]
 public class ItemDataSO : ScriptableObject {
-    //PH
-    [SerializeField] private string itemName;
-    [SerializeField] private string description;
-    [SerializeField] private ItemType itemType;
-    [SerializeField] private Sprite icon;
+    [SerializeField] protected string itemName;
+    [SerializeField] protected string description; // Player-facing description
+    [SerializeField] protected ItemType itemType;
+    [SerializeField] protected Sprite icon;
 
     [Header("Shop Properties")]
-    [SerializeField] private bool isSellable;
-    [SerializeField] private int basePrice;
+    [SerializeField] protected bool isSellable;
+    [SerializeField] protected int basePrice;
 
-    public string GetName() => itemName;
-    public string GetDescription() => description;
-    public ItemType GetItemType() => itemType;
-    public Sprite GetIcon() => icon;
-
-    public bool IsSellable() => isSellable;
-    public int GetBasePrice() => basePrice;
+    public virtual string GetName() => itemName;
+    public virtual string GetDescription() => description;
+    public virtual Sprite GetIcon() => icon;
+    public virtual ItemType GetItemType() => itemType;
+    public virtual bool IsSellable() => isSellable;
+    public virtual int GetBasePrice() => basePrice;
 }

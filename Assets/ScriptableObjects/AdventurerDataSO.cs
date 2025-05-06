@@ -66,6 +66,15 @@ public class AdventurerDataSO : ScriptableObject {
             lootItems.Add(new AdventurerLootItem(loot, 1));
     }
 
+    public void RemoveLoot(LootItemDataSO loot, int quantity) {
+        var existingItem = lootItems.Find(i => i.LootItemDataSO == loot);
+        if (existingItem != null) {
+            existingItem.Quantity -= 1;
+            if(existingItem.Quantity == 0)lootItems.Remove(existingItem);
+        } else
+            lootItems.Add(new AdventurerLootItem(loot, 1));
+    }
+
     public void ClearInventory() {
         inventory.Clear();
     }

@@ -16,8 +16,7 @@ public class ResultPanelUI : MonoBehaviour {
 
     private void OnEnable() {
         var adventurers = DungeonManager.Instance.GetAvailableAdventurers();
-        var gold = ShopManager.Instance.GetGold();
-        ResultManager.Instance.InitializeResults(adventurers, gold);
+        ResultManager.Instance.InitializeResults(adventurers);
 
         PopulateUI();
         UpdateGoldDisplay();
@@ -49,7 +48,7 @@ public class ResultPanelUI : MonoBehaviour {
         bool canAfford = ResultManager.Instance.CanAfford();
 
         totalGoldText.text = $"Total: {totalCost}g";
-        availableGoldText.text = $"Gold: {gold}g";
+        availableGoldText.text = $"Gold: {ShopManager.Instance.GetGold()}g";
 
         totalGoldText.color = canAfford ? normalColor : warningColor;
         availableGoldText.color = canAfford ? normalColor : warningColor;
@@ -65,6 +64,9 @@ public class ResultPanelUI : MonoBehaviour {
 
     public void OnConfirmClicked() {
         ResultManager.Instance.ConfirmPurchases();
+
+        PopulateUI();
+        UpdateGoldDisplay();
         // Possibly transition to the next phase
     }
 }

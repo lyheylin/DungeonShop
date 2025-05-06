@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0577498f0d370a49b2a135a9646230f, type: 3}
+  m_Script: {fileID: 11500000, guid: 780c4aece66166740a2c0a58c3be3259, type: 3}
   m_Name: DirtClump
   m_EditorClassIdentifier: 
   itemName: Dirt Clump
   description: Clump of Dirt.
-  itemType: 3
+  itemType: 0
   icon: {fileID: 21300000, guid: 35d4a5f26786e994b86db54ba9823572, type: 3}
   isSellable: 0
-  basePrice: 40
-  convertedItem: {fileID: 11400000, guid: 5f6cc5b4c636e814493e936586ebd548, type: 2}
-  rarity: 0
-  adventurerDescription: 
+  basePrice: 0

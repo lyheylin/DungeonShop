@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0577498f0d370a49b2a135a9646230f, type: 3}
+  m_Script: {fileID: 11500000, guid: 780c4aece66166740a2c0a58c3be3259, type: 3}
   m_Name: ClothScrap
   m_EditorClassIdentifier: 
   itemName: Cloth scrap
   description: A scavaged scrap of cloth.
-  itemType: 3
+  itemType: 0
   icon: {fileID: 21300000, guid: ec12186ebd60ca94488e2d4be70208f1, type: 3}
   isSellable: 0
-  basePrice: 40
-  convertedItem: {fileID: 11400000, guid: 41b687ccc6edc794b8438b52bf4d72c4, type: 2}
-  rarity: 0
-  adventurerDescription: 
+  basePrice: 0
