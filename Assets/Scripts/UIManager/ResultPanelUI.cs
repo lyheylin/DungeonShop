@@ -13,6 +13,7 @@ public class ResultPanelUI : MonoBehaviour {
     [SerializeField] private Button confirmPurchaseButton;
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color warningColor = Color.red;
+    [SerializeField] private Button nextDayButton;
 
     private void OnEnable() {
         var adventurers = DungeonManager.Instance.GetAvailableAdventurers();
@@ -21,6 +22,7 @@ public class ResultPanelUI : MonoBehaviour {
         PopulateUI();
         UpdateGoldDisplay();
         confirmPurchaseButton.onClick.AddListener(OnConfirmClicked);
+        nextDayButton.onClick.AddListener(OnNextDayClicked);
     }
 
     private void PopulateUI() {
@@ -69,5 +71,9 @@ public class ResultPanelUI : MonoBehaviour {
         PopulateUI();
         UpdateGoldDisplay();
         // Possibly transition to the next phase
+    }
+
+    public void OnNextDayClicked() {
+        GameManager.Instance.AdvanceToNextState();
     }
 }

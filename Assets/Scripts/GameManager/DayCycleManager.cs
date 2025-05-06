@@ -60,7 +60,7 @@ public class DayCycleManager : MonoBehaviour {
     }
 
     public void Handle_OnResultStateEnded(GameState state) {
-        Debug.Log($"Day {currentDay} ended.");
+        LogManager.Instance.Log($"Day {currentDay} ended.");
         OnDayEnded?.Invoke(currentDay);
 
         currentDay++;
