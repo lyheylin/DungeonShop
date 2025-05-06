@@ -20,6 +20,7 @@ public class ResultPanelUI : MonoBehaviour {
 
         PopulateUI();
         UpdateGoldDisplay();
+        confirmPurchaseButton.onClick.AddListener(OnConfirmClicked);
     }
 
     private void PopulateUI() {
