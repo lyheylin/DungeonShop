@@ -1,94 +1,144 @@
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditorInternal;
 
 [CustomEditor(typeof(EventDataSO))]
 public class EventDataSOEditor : Editor {
     private SerializedProperty eventNameProp;
     private SerializedProperty commandsProp;
 
+    private ReorderableList commandList;
+
     private void OnEnable() {
         eventNameProp = serializedObject.FindProperty("eventName");
         commandsProp = serializedObject.FindProperty("commands");
+
+        commandList = new ReorderableList(serializedObject, commandsProp, true, true, true, true);
+
+        commandList.drawHeaderCallback = (Rect rect) => {
+            EditorGUI.LabelField(rect, "Event Commands");
+        };
+
+        commandList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
+            var command = commandsProp.GetArrayElementAtIndex(index);
+            var commandType = command.FindPropertyRelative("commandType");
+
+            float y = rect.y + 2f;
+            float height = EditorGUIUtility.singleLineHeight;
+
+            EditorGUI.PropertyField(
+                new Rect(rect.x, y, rect.width - 40, height),
+                commandType,
+                GUIContent.none
+            );
+
+            if (GUI.Button(new Rect(rect.x + rect.width - 35, y, 30, height), "X")) {
+                commandsProp.DeleteArrayElementAtIndex(index);
+                return;
+            }
+
+            y += height + 2f;
+            EditorGUI.indentLevel++;
+
+            DrawCommandFields(command, ref y, rect, index);
+
+            EditorGUI.indentLevel--;
+        };
+
+        commandList.elementHeightCallback = (index) => {
+            var command = commandsProp.GetArrayElementAtIndex(index);
+            return CalculateElementHeight(command) + 10f;
+        };
     }
 
     public override void OnInspectorGUI() {
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(eventNameProp);
-
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Event Commands", EditorStyles.boldLabel);
 
-        for (int i = 0; i < commandsProp.arraySize; i++) {
-            SerializedProperty commandProp = commandsProp.GetArrayElementAtIndex(i);
-            SerializedProperty commandType = commandProp.FindPropertyRelative("commandType");
-
-            EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.BeginHorizontal();
-            commandType.enumValueIndex = (int)(EventCommandType)EditorGUILayout.EnumPopup("Command", (EventCommandType)commandType.enumValueIndex);
-
-            if (GUILayout.Button("X", GUILayout.Width(20))) {
-                commandsProp.DeleteArrayElementAtIndex(i);
-                break;
-            }
-            EditorGUILayout.EndHorizontal();
-
-            // Draw fields conditionally based on command type
-            DrawCommandFields(commandProp);
-            EditorGUILayout.EndVertical();
-        }
-
-        if (GUILayout.Button("Add New Command")) {
-            commandsProp.InsertArrayElementAtIndex(commandsProp.arraySize);
-        }
+        commandList.DoLayoutList();
 
         serializedObject.ApplyModifiedProperties();
     }
 
-    private void DrawCommandFields(SerializedProperty commandProp) {
-        EventCommandType type = (EventCommandType)commandProp.FindPropertyRelative("commandType").enumValueIndex;
+    private void DrawCommandFields(SerializedProperty command, ref float y, Rect rect, int index) {
+        float width = rect.width;
+        float height = EditorGUIUtility.singleLineHeight;
+
+        EventCommandType type = (EventCommandType)command.FindPropertyRelative("commandType").enumValueIndex;
 
         switch (type) {
             case EventCommandType.ShowDialogue:
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("characterName"));
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("dialogueText"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
+                y += height + 2;
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("dialogueText"));
+                y += height + 2;
                 break;
 
             case EventCommandType.ShowCharacter:
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("characterName"));
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("characterSprite"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
+                y += height + 2;
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterSprite"));
+                y += height + 2;
                 break;
 
             case EventCommandType.HideCharacter:
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("characterName"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
+                y += height + 2;
                 break;
 
             case EventCommandType.SetBackground:
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("backgroundImage"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("backgroundImage"));
+                y += height + 2;
                 break;
 
             case EventCommandType.WaitForClick:
-                EditorGUILayout.PropertyField(commandProp.FindPropertyRelative("waitFrames"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("waitFrames"));
+                y += height + 2;
                 break;
 
             case EventCommandType.BranchChoice:
-                SerializedProperty choices = commandProp.FindPropertyRelative("choices");
-                EditorGUILayout.LabelField("Choices:");
+                SerializedProperty choices = command.FindPropertyRelative("choices");
+                EditorGUI.LabelField(new Rect(rect.x, y, width, height), "Choices:");
+                y += height + 2;
+
                 for (int i = 0; i < choices.arraySize; i++) {
-                    EditorGUILayout.BeginHorizontal();
-                    choices.GetArrayElementAtIndex(i).stringValue = EditorGUILayout.TextField($"Choice {i + 1}", choices.GetArrayElementAtIndex(i).stringValue);
-                    if (GUILayout.Button("-", GUILayout.Width(20))) {
+                    var choiceProp = choices.GetArrayElementAtIndex(i);
+                    EditorGUI.PropertyField(new Rect(rect.x + 10, y, width - 40, height), choiceProp, new GUIContent($"Choice {i + 1}"));
+
+                    if (GUI.Button(new Rect(rect.x + width - 30, y, 20, height), "-")) {
                         choices.DeleteArrayElementAtIndex(i);
                         break;
                     }
-                    EditorGUILayout.EndHorizontal();
+
+                    y += height + 2;
                 }
 
-                if (GUILayout.Button("Add Choice")) {
+                if (GUI.Button(new Rect(rect.x + 10, y, 100, height), "Add Choice")) {
                     choices.InsertArrayElementAtIndex(choices.arraySize);
+                    choices.GetArrayElementAtIndex(choices.arraySize - 1).stringValue = "";
                 }
+                y += height + 2;
                 break;
+        }
+    }
+
+    private float CalculateElementHeight(SerializedProperty command) {
+        float lineHeight = EditorGUIUtility.singleLineHeight + 6;
+        EventCommandType type = (EventCommandType)command.FindPropertyRelative("commandType").enumValueIndex;
+
+        switch (type) {
+            case EventCommandType.ShowDialogue: return lineHeight * 2;
+            case EventCommandType.ShowCharacter: return lineHeight * 2;
+            case EventCommandType.HideCharacter: return lineHeight;
+            case EventCommandType.SetBackground: return lineHeight;
+            case EventCommandType.WaitForClick: return lineHeight;
+            case EventCommandType.BranchChoice:
+                SerializedProperty choices = command.FindPropertyRelative("choices");
+                return lineHeight * (choices.arraySize + 2);
+            default: return lineHeight;
         }
     }
 }
