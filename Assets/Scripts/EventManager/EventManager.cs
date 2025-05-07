@@ -5,21 +5,10 @@ using UnityEngine;
 public class EventManager : MonoBehaviour {
     [SerializeField] private EventSceneUI eventSceneUI;
 
-    private Queue<EventCommand> commandQueue;
+    private List<EventCommand> commands;
 
     public void PlayEvent(EventDataSO eventData) {
-        commandQueue = new Queue<EventCommand>(eventData.commands);
-        eventSceneUI.Show();
-        StartCoroutine(ProcessCommands());
+        PlayEvent(eventData);
     }
 
-    private IEnumerator ProcessCommands() {
-        while (commandQueue.Count > 0) {
-            var cmd = commandQueue.Dequeue();
-            yield return eventSceneUI.ExecuteCommand(cmd);
-        }
-
-        eventSceneUI.Hide();
-        //GameManager.Instance.ResumeAfterEvent(); // or move to next phase
-    }
 }
