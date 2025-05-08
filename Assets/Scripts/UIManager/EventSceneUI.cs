@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 
@@ -37,7 +38,7 @@ public class EventSceneUI : MonoBehaviour {
 
             switch (cmd.commandType) {
                 case EventCommandType.ShowDialogue:
-                    yield return ShowDialogue(cmd.characterName, cmd.dialogueText);
+                    yield return ShowDialogue(cmd.characterName, cmd.dialogueKey);
                     break;
 
                 case EventCommandType.ShowCharacter:
@@ -67,7 +68,8 @@ public class EventSceneUI : MonoBehaviour {
         EndEvent();
     }
 
-    private IEnumerator ShowDialogue(string name, string text) {
+    private IEnumerator ShowDialogue(string name, string dialogueKey) {
+        var text = new LocalizedString("Dialogue", dialogueKey);
         speakerText.text = name;
         dialogueText.text = "";
         isTyping = true;

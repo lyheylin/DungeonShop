@@ -15,7 +15,7 @@ public enum EventCommandType {
 public class EventCommand {
     public EventCommandType commandType;
     public string characterName;
-    public string dialogueText;
+    public string dialogueKey;
     public Sprite characterSprite;
     public Sprite backgroundImage;
     public int waitFrames;

@@ -73,7 +73,7 @@ public class EventDataSOEditor : Editor {
             case EventCommandType.ShowDialogue:
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
                 y += height + 2;
-                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("dialogueText"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("dialogueKey"));
                 y += height + 2;
                 break;
 
