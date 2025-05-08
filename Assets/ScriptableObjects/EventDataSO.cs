@@ -14,7 +14,7 @@ public enum EventCommandType {
 [System.Serializable]
 public class EventCommand {
     public EventCommandType commandType;
-    public string characterName;
+    public string characterKey;
     public string dialogueKey;
     public Sprite characterSprite;
     public Sprite backgroundImage;

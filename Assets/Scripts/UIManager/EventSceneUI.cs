@@ -23,6 +23,8 @@ public class EventSceneUI : MonoBehaviour {
     private int commandIndex = 0;
     private bool waitingForClick = false;
     private bool isTyping = false;
+    private bool fastForward = false;
+    private bool skipTyping = false;
 
     public void PlayEvent(EventDataSO data) {
         commands = data.commands;
@@ -38,15 +40,15 @@ public class EventSceneUI : MonoBehaviour {
 
             switch (cmd.commandType) {
                 case EventCommandType.ShowDialogue:
-                    yield return ShowDialogue(cmd.characterName, cmd.dialogueKey);
+                    yield return ShowDialogue(cmd.characterKey, cmd.dialogueKey);
                     break;
 
                 case EventCommandType.ShowCharacter:
-                    ShowCharacter(cmd.characterName, cmd.characterSprite);
+                    ShowCharacter(cmd.characterKey, cmd.characterSprite);
                     break;
 
                 case EventCommandType.HideCharacter:
-                    HideCharacter(cmd.characterName);
+                    HideCharacter(cmd.characterKey);
                     break;
 
                 case EventCommandType.SetBackground:
@@ -68,19 +70,36 @@ public class EventSceneUI : MonoBehaviour {
         EndEvent();
     }
 
-    private IEnumerator ShowDialogue(string name, string dialogueKey) {
-        var text = new LocalizedString("Dialogue", dialogueKey);
-        speakerText.text = name;
+    private IEnumerator ShowDialogue(string nameKey, string dialogueKey) {
+        var localizedText = new LocalizedString("Dialogue", dialogueKey);
+
+        // Wait for localized value
+        var handle = localizedText.GetLocalizedStringAsync();
+        yield return handle;
+        string fullText = handle.Result;
+
+        speakerText.text = nameKey; // Replace with localized name if desired
         dialogueText.text = "";
         isTyping = true;
+        skipTyping = false;
 
-        foreach (char c in text) {
+        foreach (char c in fullText) {
+            if (skipTyping) {
+                dialogueText.text = fullText;
+                break;
+            }
+
             dialogueText.text += c;
             yield return new WaitForSecondsRealtime(0.02f);
         }
 
         isTyping = false;
-        yield return WaitForClick();
+        skipTyping = false;
+
+        // If holding to fast-forward, auto-skip wait
+        if (!fastForward) {
+            yield return WaitForClick();
+        }
     }
 
     private void ShowCharacter(string name, Sprite sprite) {
@@ -104,11 +123,12 @@ public class EventSceneUI : MonoBehaviour {
     }
 
     private IEnumerator WaitForClick() {
+        if (fastForward) yield break;
+
         waitingForClick = true;
-        while (!Input.GetMouseButtonDown(0) && !Input.GetKeyDown(KeyCode.Space)) {
+        while (waitingForClick) {
             yield return null;
         }
-        waitingForClick = false;
     }
 
     private IEnumerator ShowChoices(List<string> choices) {
@@ -143,8 +163,15 @@ public class EventSceneUI : MonoBehaviour {
     private void Update() {
         if (!panelRoot.activeSelf) return;
 
-        if (waitingForClick && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))) {
-            waitingForClick = false;
+        // Handle skip / fast-forward input
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) {
+            if (isTyping) {
+                skipTyping = true;
+            } else {
+                waitingForClick = false;
+            }
         }
+
+        fastForward = Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space);
     }
 }

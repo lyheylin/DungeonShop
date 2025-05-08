@@ -71,21 +71,21 @@ public class EventDataSOEditor : Editor {
 
         switch (type) {
             case EventCommandType.ShowDialogue:
-                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterKey"));
                 y += height + 2;
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("dialogueKey"));
                 y += height + 2;
                 break;
 
             case EventCommandType.ShowCharacter:
-                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterKey"));
                 y += height + 2;
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterSprite"));
                 y += height + 2;
                 break;
 
             case EventCommandType.HideCharacter:
-                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterName"));
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterKey"));
                 y += height + 2;
                 break;
 
