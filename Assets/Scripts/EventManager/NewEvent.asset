@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: NewEvent
   m_EditorClassIdentifier: Assembly-CSharp::EventDataSO
   eventName: Opening Scene
-  commands: []
+  commands:
+  - commandType: 0
+    characterKey: 
+    dialogueKey: 
+    speakerBoxPosition: 0
+    characterSprite: {fileID: 0}
+    characterPosition: 0
+    backgroundImage: {fileID: 0}
+    waitFrames: 0
+    choices: []

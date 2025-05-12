@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EventSceneUI;
 
 public enum EventCommandType {
     ShowDialogue,
@@ -16,7 +17,10 @@ public class EventCommand {
     public EventCommandType commandType;
     public string characterKey;
     public string dialogueKey;
+    public SpeakerBoxPosition speakerBoxPosition;
     public Sprite characterSprite;
+    public CharacterPosition characterPosition;
+
     public Sprite backgroundImage;
     public int waitFrames;
     public List<string> choices;

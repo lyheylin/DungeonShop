@@ -75,12 +75,16 @@ public class EventDataSOEditor : Editor {
                 y += height + 2;
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("dialogueKey"));
                 y += height + 2;
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("speakerBoxPosition"));
+                y += height + 2;
                 break;
 
             case EventCommandType.ShowCharacter:
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterKey"));
                 y += height + 2;
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterSprite"));
+                y += height + 2;
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterPosition"));
                 y += height + 2;
                 break;
 
@@ -130,8 +134,8 @@ public class EventDataSOEditor : Editor {
         EventCommandType type = (EventCommandType)command.FindPropertyRelative("commandType").enumValueIndex;
 
         switch (type) {
-            case EventCommandType.ShowDialogue: return lineHeight * 2;
-            case EventCommandType.ShowCharacter: return lineHeight * 2;
+            case EventCommandType.ShowDialogue: return lineHeight * 3;
+            case EventCommandType.ShowCharacter: return lineHeight * 3;
             case EventCommandType.HideCharacter: return lineHeight;
             case EventCommandType.SetBackground: return lineHeight;
             case EventCommandType.WaitForClick: return lineHeight;
