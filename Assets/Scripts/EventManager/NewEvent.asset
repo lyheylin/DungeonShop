@@ -16,10 +16,55 @@ MonoBehaviour:
   commands:
   - commandType: 0
     characterKey: 
-    dialogueKey: 
+    dialogueKey: OPENING_SCENE_01_LINE_01
     speakerBoxPosition: 0
     characterSprite: {fileID: 0}
     characterPosition: 0
+    backgroundImage: {fileID: 0}
+    waitFrames: 0
+    choices: []
+  - commandType: 0
+    characterKey: 
+    dialogueKey: OPENING_SCENE_01_LINE_02
+    speakerBoxPosition: 0
+    characterSprite: {fileID: 0}
+    characterPosition: 0
+    backgroundImage: {fileID: 0}
+    waitFrames: 0
+    choices: []
+  - commandType: 0
+    characterKey: 
+    dialogueKey: OPENING_SCENE_01_LINE_03
+    speakerBoxPosition: 0
+    characterSprite: {fileID: 0}
+    characterPosition: 0
+    backgroundImage: {fileID: 0}
+    waitFrames: 0
+    choices: []
+  - commandType: 3
+    characterKey: 
+    dialogueKey: OPENING_SCENE_01_LINE_03
+    speakerBoxPosition: 0
+    characterSprite: {fileID: 0}
+    characterPosition: 0
+    backgroundImage: {fileID: 0}
+    waitFrames: 0
+    choices: []
+  - commandType: 1
+    characterKey: 
+    dialogueKey: OPENING_SCENE_01_LINE_03
+    speakerBoxPosition: 0
+    characterSprite: {fileID: 21300000, guid: 6401234e3357a3a4593cc23b949f0848, type: 3}
+    characterPosition: 1
+    backgroundImage: {fileID: 0}
+    waitFrames: 0
+    choices: []
+  - commandType: 0
+    characterKey: 
+    dialogueKey: OPENING_SCENE_01_LINE_04
+    speakerBoxPosition: 0
+    characterSprite: {fileID: 0}
+    characterPosition: 1
     backgroundImage: {fileID: 0}
     waitFrames: 0
     choices: []

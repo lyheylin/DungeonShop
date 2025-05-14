@@ -20,7 +20,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 318047092736
-    m_Key: New Entry
+    m_Key: OPENING_SCENE_01_LINE_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1892740515594240
+    m_Key: OPENING_SCENE_01_LINE_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1892941267566592
+    m_Key: OPENING_SCENE_01_LINE_04
     m_Metadata:
       m_Items: []
   m_Metadata:

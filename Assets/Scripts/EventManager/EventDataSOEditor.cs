@@ -86,6 +86,8 @@ public class EventDataSOEditor : Editor {
                 y += height + 2;
                 EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("characterPosition"));
                 y += height + 2;
+                EditorGUI.PropertyField(new Rect(rect.x, y, width, height), command.FindPropertyRelative("offset"));
+                y += height + 2;
                 break;
 
             case EventCommandType.HideCharacter:
@@ -135,7 +137,7 @@ public class EventDataSOEditor : Editor {
 
         switch (type) {
             case EventCommandType.ShowDialogue: return lineHeight * 3;
-            case EventCommandType.ShowCharacter: return lineHeight * 3;
+            case EventCommandType.ShowCharacter: return lineHeight * 4;
             case EventCommandType.HideCharacter: return lineHeight;
             case EventCommandType.SetBackground: return lineHeight;
             case EventCommandType.WaitForClick: return lineHeight;

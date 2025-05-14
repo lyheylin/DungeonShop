@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class EventSceneUI : MonoBehaviour {
     [Header("UI Elements")]
     [SerializeField] private GameObject panelRoot;
-    [SerializeField] private TMP_Text speakerText;
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Transform characterContainer;
@@ -148,7 +147,7 @@ public class EventSceneUI : MonoBehaviour {
         Right
     }
 
-    private void ShowCharacter(string characterKey, Sprite sprite, CharacterPosition position, float offset = 0) {
+    private void ShowCharacter(string characterKey, Sprite sprite, CharacterPosition position, float offset = 0f) {
         if (!activeCharacters.TryGetValue(characterKey, out Image img)) {
             GameObject go = Instantiate(characterPrefab, characterContainer);
             img = go.GetComponent<Image>();
@@ -161,6 +160,11 @@ public class EventSceneUI : MonoBehaviour {
         // Move to specified anchor
         RectTransform anchor = GetAnchor(position);
         img.rectTransform.SetParent(anchor, false);
+
+        // Apply offset (horizontal nudge)
+        Vector2 anchoredPos = img.rectTransform.anchoredPosition;
+        anchoredPos.x += offset;
+        img.rectTransform.anchoredPosition = anchoredPos;
     }
 
     private RectTransform GetAnchor(CharacterPosition pos) {

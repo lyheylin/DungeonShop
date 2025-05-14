@@ -22,6 +22,18 @@ MonoBehaviour:
     m_Localized: Alright! It looks like everything is ready to roll!
     m_Metadata:
       m_Items: []
+  - m_Id: 318047092736
+    m_Localized: All there is left is to open the shop now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1892740515594240
+    m_Localized: Here we go, the grand opening of... ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1892941267566592
+    m_Localized: Good morning! How's everything...
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
