@@ -33,6 +33,25 @@ public class AdventurerDataSO : ScriptableObject {
     [SerializeField] private int baseAttack;
     [SerializeField] private int baseDefense;
     public Sprite portrait;
+
+    [SerializeField] private int strength;
+    [SerializeField] private int agility;
+    [SerializeField] private int constitution;
+    [SerializeField] private int spirituality;
+    [SerializeField] private int insight;
+
+    [SerializeField] private List<AdventurerTrait> innateTraits;
+    private AdventurerRuntimeData adventurerRuntimeData;
+    public int GetStrength() => strength;
+    public int GetAgility() => agility;
+    public int GetConstitution() => constitution;
+    public int GetSpirituality() => spirituality;
+    public int GetInsight() => insight;
+    public List<AdventurerTrait> GetInnateTraits() => innateTraits;
+    public AdventurerRuntimeData GetAdventurerRuntimeData() => adventurerRuntimeData;
+
+
+    
     [SerializeField] private List<AdventurerInventoryItem> inventory = new List<AdventurerInventoryItem>();
     [SerializeField] private ItemDataSO equippedItem;
     private List<AdventurerLootItem> lootItems = new();

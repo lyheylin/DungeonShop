@@ -3380,7 +3380,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelRoot: {fileID: 2038337447}
-  speakerText: {fileID: 0}
   dialogueText: {fileID: 1332755770}
   backgroundImage: {fileID: 1471268260}
   characterContainer: {fileID: 2104643732}
@@ -5578,6 +5577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1134993852}
+  - component: {fileID: 1134993853}
   m_Layer: 7
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -5603,11 +5603,19 @@ RectTransform:
   - {fileID: 270971146}
   m_Father: {fileID: 738018244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 580, y: 175}
+  m_SizeDelta: {x: -70, y: -175}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1134993853
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134993851}
+  m_CullTransparentMesh: 1
 --- !u!1 &1138941131
 GameObject:
   m_ObjectHideFlags: 0
@@ -7266,6 +7274,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7050293223937497086, guid: 90dab674b8814e045b708eea93c27e35, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 486a28d42c9269c458f3725aec650197, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8580,14 +8592,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2924528, g: 0.24141152, b: 0.24141152, a: 0.6313726}
+  m_Color: {r: 0.2924528, g: 0.24141152, b: 0.24141152, a: 0.4117647}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 10, y: 10, z: 10, w: 10}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1e24044eeb8fd0e4587696327b37aac1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8596,7 +8608,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.01
 --- !u!222 &1917309139
 CanvasRenderer:
   m_ObjectHideFlags: 0

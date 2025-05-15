@@ -8,7 +8,8 @@ public class DungeonAreaSO : ScriptableObject {
     [SerializeField] private List<MonsterDataSO> monsters;
     [TextArea][SerializeField] private string description;
     [SerializeField] private Sprite areaIcon;
-
+    [SerializeField] private List<DungeonTrait> areaTraits;
+    public List<DungeonTrait> GetAreaTraits() => areaTraits;
     public string GetAreaName() => areaName;
     public List<MonsterDataSO> GetMonsters() => monsters;
     public string GetDescription() => description;
