@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
+using static UnityEngine.ParticleSystem;
 
 
 [System.Serializable]
@@ -40,17 +41,15 @@ public class AdventurerDataSO : ScriptableObject {
     [SerializeField] private int spirituality;
     [SerializeField] private int insight;
 
-    [SerializeField] private List<AdventurerTrait> innateTraits;
+    [SerializeField] private List<AdventurerTraitSO> traits;
     private AdventurerRuntimeData adventurerRuntimeData;
     public int GetStrength() => strength;
     public int GetAgility() => agility;
     public int GetConstitution() => constitution;
     public int GetSpirituality() => spirituality;
     public int GetInsight() => insight;
-    public List<AdventurerTrait> GetInnateTraits() => innateTraits;
+    public List<AdventurerTraitSO> GetTraits() => traits;
     public AdventurerRuntimeData GetAdventurerRuntimeData() => adventurerRuntimeData;
-
-
     
     [SerializeField] private List<AdventurerInventoryItem> inventory = new List<AdventurerInventoryItem>();
     [SerializeField] private ItemDataSO equippedItem;
@@ -62,6 +61,17 @@ public class AdventurerDataSO : ScriptableObject {
 
     public ItemDataSO GetEquippedItem() => equippedItem;
     public List<AdventurerInventoryItem> GetInventory() => inventory;
+
+    public void InitiateAdventurer() {
+        //TODO
+    }
+
+    public void ApplyTraits() {
+        foreach (AdventurerTraitSO trait in GetTraits()) {
+            ITraitEffect effect = trait.CreateEffectInstance();
+            effect?.ApplyEffect(adventurerRuntimeData);
+        }
+    }
 
     public void AddToInventory(ItemDataSO item, int quantity = 1) {
         var existingItem = inventory.Find(i => i.ItemData == item);

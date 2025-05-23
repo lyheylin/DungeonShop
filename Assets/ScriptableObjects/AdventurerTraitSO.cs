@@ -7,6 +7,8 @@ public class AdventurerTraitSO : ScriptableObject {
     [SerializeField] private string traitName;
     [SerializeField] private string description;
     [SerializeField] private Sprite icon;
+    [SerializeField] private TraitEffectType effectType;
+    [SerializeField] private float effectValue;
 
     private List<ITraitEffect> effects = new();
 
@@ -20,5 +22,9 @@ public class AdventurerTraitSO : ScriptableObject {
         foreach (var effect in effects) {
             effect.ApplyEffect(data);
         }
+    }
+
+    public ITraitEffect CreateEffectInstance() {
+        return TraitEffectFactory.CreateEffect(effectType, effectValue);
     }
 }

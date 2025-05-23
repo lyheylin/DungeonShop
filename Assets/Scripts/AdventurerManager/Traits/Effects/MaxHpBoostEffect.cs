@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MaxHpBoostEffect : ITraitEffect {
-    private readonly float _hpBoost;
+    private readonly int _hpBoost;
 
-    public MaxHpBoostEffect(float hpBoost) {
+    public MaxHpBoostEffect(int hpBoost) {
         _hpBoost = hpBoost;
     }
 
     public void ApplyEffect(AdventurerRuntimeData adventurer) {
-        adventurer.MaxHP = (int)(adventurer.MaxHP*_hpBoost);
+        adventurer.MaxHP += _hpBoost;
     }
 }
