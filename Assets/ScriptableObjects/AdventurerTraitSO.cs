@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewTrait", menuName = "Game/AdventurerTrait")]
 public class AdventurerTraitSO : ScriptableObject {
     [SerializeField] private string traitName;
-    [SerializeField] private string description;
+    [SerializeField] public string description;
     [SerializeField] private Sprite icon;
-    [SerializeField] private TraitEffectType effectType;
+    [SerializeField] public TraitEffectType effectType;
     [SerializeField] private float effectValue;
 
     private List<ITraitEffect> effects = new();

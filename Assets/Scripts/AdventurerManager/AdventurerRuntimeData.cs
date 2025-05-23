@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,5 +21,11 @@ public class AdventurerRuntimeData {
 
     public void ApplyConsumable(ItemDataSO item) {
         // Use logic based on item effect
+    }
+
+    private bool canUseMultipleItems = false;
+    public bool CanUseMultipleItems() => canUseMultipleItems;
+    internal void SetCanUseMultipleItems(bool value) {
+        canUseMultipleItems = value;
     }
 }
