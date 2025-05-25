@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bacdc100b6ae1e44e8f033549815b15e, type: 3}
+  m_Name: Touch Explorer
+  m_EditorClassIdentifier: 
+  traitName: Touch Explorer
+  description: 
+  icon: {fileID: 0}
+  effectType: 2
+  effectValue: 0
+  effects:
+  - {fileID: 11400000, guid: c431f40acb8df0c41b8b27918913e5c9, type: 2}
+  - {fileID: 11400000, guid: 634d7c997cfe925439ee0414938bc152, type: 2}

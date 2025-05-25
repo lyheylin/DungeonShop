@@ -7,7 +7,8 @@ public enum TraitEffectType {
     MaxHPBoost,
     StrengthMultiplier,
     ToughExplorer,
-    Resourceful
+    Resourceful,
+    AttackBoost
     //
 }
 public static class TraitEffectFactory {
@@ -16,6 +17,7 @@ public static class TraitEffectFactory {
             TraitEffectType.MaxHPBoost => new MaxHpBoostEffect(Mathf.RoundToInt(value)),
             TraitEffectType.ToughExplorer => new CompositeTraitEffect(new MaxHpBoostEffect(20), new AttackBoostEffect(2)),
             TraitEffectType.Resourceful => new DualItemUsageEffect(),
+            TraitEffectType.AttackBoost => new AttackBoostEffect(value),
             _ => null
         };
     }

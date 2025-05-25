@@ -10,13 +10,14 @@ public class AdventurerTraitSO : ScriptableObject {
     [SerializeField] public TraitEffectType effectType;
     [SerializeField] private float effectValue;
 
-    private List<ITraitEffect> effects = new();
+    //private List<ITraitEffect> effects = new();
+    [SerializeField] private List<TraitEffectBase> effects;
 
     public string GetTraitName() => traitName;
     public string GetDescription() => description;
     public Sprite GetIcon() => icon;
 
-    public void AddEffect(ITraitEffect effect) => effects.Add(effect);
+    public void AddEffect(TraitEffectBase effect) => effects.Add(effect);
 
     public void ApplyAllEffects(AdventurerRuntimeData data) {
         foreach (var effect in effects) {

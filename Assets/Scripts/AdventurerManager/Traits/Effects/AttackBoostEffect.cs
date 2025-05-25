@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackBoostEffect : ITraitEffect {
-    private readonly int _amount;
+[CreateAssetMenu(menuName = "Traits/EffectBases/AttackBoost")]
+public class AttackBoostEffect : TraitEffectBase {
+    [SerializeField] private float _amount;
 
-    public AttackBoostEffect(int amount) {
+    public AttackBoostEffect(float amount) {
         _amount = amount;
     }
 
-    public void ApplyEffect(AdventurerRuntimeData adventurer) {
-        adventurer.Attack += _amount;
+    public override void ApplyEffect(AdventurerRuntimeData adventurer) {
+        adventurer.Attack = Mathf.RoundToInt(adventurer.Attack*_amount);
     }
 }
