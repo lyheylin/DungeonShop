@@ -50,7 +50,47 @@ public class AdventurerDataSO : ScriptableObject {
     public int GetInsight() => insight;
     public List<AdventurerTraitSO> GetTraits() => traits;
     public AdventurerRuntimeData GetAdventurerRuntimeData() => adventurerRuntimeData;
-    
+
+
+    //updated version
+    [SerializeField] private EquipmentDataSO equippedWeapon;
+    [SerializeField] private EquipmentDataSO equippedArmor;
+    [SerializeField] private List<EquipmentDataSO> equippedAccessories = new();
+    private int maxAccessorySlots = 3;
+
+    public void EquipWeapon(EquipmentDataSO weapon) {
+        if (weapon.GetEquipmentType() == EquipmentType.Weapon) {
+            equippedWeapon = weapon;
+        }
+    }
+
+    public void EquipArmor(EquipmentDataSO armor) {
+        if (armor.GetEquipmentType() == EquipmentType.Armor) {
+            equippedArmor = armor;
+        }
+    }
+
+    public void EquipAccessory(EquipmentDataSO accessory) {
+        if (accessory.GetEquipmentType() == EquipmentType.Accessory && equippedAccessories.Count < maxAccessorySlots) {
+            equippedAccessories.Add(accessory);
+        }
+    }
+
+    public void ApplyEquippedTraits() {
+        List<AdventurerTraitSO> equipmentTraits = new(GetTraits());
+
+        if (equippedWeapon != null) equipmentTraits.AddRange(equippedWeapon.GetGrantedTraits());
+        if (equippedArmor != null) equipmentTraits.AddRange(equippedArmor.GetGrantedTraits());
+        foreach (var accessory in equippedAccessories)
+            equipmentTraits.AddRange(accessory.GetGrantedTraits());
+
+        //merged everything here
+        foreach (AdventurerTraitSO trait in equipmentTraits) {
+            var effect = trait.CreateEffectInstance();
+            effect?.ApplyEffect(adventurerRuntimeData);
+        }
+    }
+
     [SerializeField] private List<AdventurerInventoryItem> inventory = new List<AdventurerInventoryItem>();
     [SerializeField] private ItemDataSO equippedItem;
     private List<AdventurerLootItem> lootItems = new();
