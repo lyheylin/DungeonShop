@@ -18,6 +18,7 @@ public class AdventurerRuntimeData {
     public AdventurerRuntimeData(AdventurerDataSO baseData) {
         AdventurerBase = baseData;
         // Initialize stats based on base + equipment + skills
+        //TODO extract, revise and isolate formulas
 
         MaxHP = Mathf.RoundToInt(baseData.GetConstitution() * 1.5f);
         CurrentHP = MaxHP;
